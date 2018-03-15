@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Noise - genomics dev blog</title>
+  <link rel="alternate" hreflang="en" href="/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="brentp" />
+  <meta name="description" content="A while ago I had an idea to find variants on the X chromosome that are under recessive constraint&amp;ndash;that is that they appear in some non-zero frequency in females but never occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but could be seen in females thanks to a backup copy. I though that these might be occurring at a relatively high allele frequency (1 in 1000)." />
+
+  <meta name="keywords" content="genomics, bioinformatics, coding" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.38-DEV" />
+
+
+<link rel="canonical" href="/post/noise/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Noise" />
+<meta property="og:description" content="A while ago I had an idea to find variants on the X chromosome that are under recessive constraint&ndash;that is that they appear in some non-zero frequency in females but never occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but could be seen in females thanks to a backup copy. I though that these might be occurring at a relatively high allele frequency (1 in 1000)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/noise/" />
+
+
+
+<meta property="article:published_time" content="2018-03-14T19:35:37-06:00"/>
+
+<meta property="article:modified_time" content="2018-03-14T19:35:37-06:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Noise">
+<meta itemprop="description" content="A while ago I had an idea to find variants on the X chromosome that are under recessive constraint&ndash;that is that they appear in some non-zero frequency in females but never occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but could be seen in females thanks to a backup copy. I though that these might be occurring at a relatively high allele frequency (1 in 1000).">
+
+
+<meta itemprop="datePublished" content="2018-03-14T19:35:37-06:00" />
+<meta itemprop="dateModified" content="2018-03-14T19:35:37-06:00" />
+<meta itemprop="wordCount" content="582">
+
+
+
+<meta itemprop="keywords" content="noise,python,variant," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Noise"/>
+<meta name="twitter:description" content="A while ago I had an idea to find variants on the X chromosome that are under recessive constraint&ndash;that is that they appear in some non-zero frequency in females but never occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but could be seen in females thanks to a backup copy. I though that these might be occurring at a relatively high allele frequency (1 in 1000)."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">bpbio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">bpbio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Noise</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-14 </span>
+        <div class="post-category">
+            
+              <a href="/categories/genomics/"> Genomics </a>
+            
+          </div>
+        <span class="more-meta"> 582 words </span>
+        <span class="more-meta"> 3 min read </span>
+      </div>
+    </header>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p>A while ago I had an idea to find variants on the X chromosome that are under
+recessive constraint&ndash;that is that they appear in some non-zero frequency in females but never
+occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but
+could be seen in females thanks to a backup copy. I though that these might be occurring at a
+relatively high allele frequency (1 in 1000).</p>
+
+<p>A reasonable first pass is to check, filter to variants on X that have:</p>
+
+<ol>
+<li>0 homozygous alternate samples in females (or males)</li>
+<li>0 heterozygous alternate samples in males.</li>
+<li>some number of heterozygous sites in females.</li>
+</ol>
+
+<p>This information is easily extracted from the <a href="http://gnomad.broadinstitute.org/downloads">gnomad exomes VCF</a>
+with 120K samples
+as it reports <code>GC_Male</code> and <code>GC_Female</code>
+which, for bi-allelic variants, have 3 values indicating the number of samples that
+are respectively homozygous reference, heterozygous, and homozygous alternate.</p>
+
+<p>I created an expected proportion of alternate alleles (not samples) using the females and then used that
+as the expected success rate for testing if males were depleted for the allele. Since gnomad also reports
+the total number of alleles in males and females (accounting already for the fact that males only have 1 allele),
+it&rsquo;s simple to put this into a binomial test</p>
+
+<pre><code class="language-python">import scipy.stats as ss
+from cyvcf2 import VCF
+vcf = VCF(&quot;gnomad.vcf.gz&quot;)
+for v in vcf(&quot;X:2781479-155701382&quot;): # exclude PAR
+    gcm = v.INFO[&quot;GC_Male&quot;]
+    gcf = v.INFO[&quot;GC_Female&quot;]
+    success_prob = gcf[1] / float(v.INFO[&quot;AN_Female&quot;])
+    # 0 successes == 0 males with an alternate out of AN_Male alleles with p defined by females.
+    p = ss.binom_test(0, v.INFO[&quot;AN_Male&quot;], p=success_prob)
+...
+</code></pre>
+
+<p>There are other ways to do this, but I figured this was a reasonable check to start</p>
+
+<p>After requiring a p-value of &lt; 1e-10 to more than account for multiple testing, more than 500 variants popped
+out.</p>
+
+<p><a href="http://gnomad.broadinstitute.org/variant/X-14937753-T-G">here</a> is one of the top variants. It has an allele frequency
+of 0.01553 but has never been seen as a homozygous alternate in 147,273 sampled alleles.</p>
+
+<p>What Aaron noticed after I sent a message to slack indicating that I&rsquo;d solved the genome was that it always occurs on
+the red (forward) reads in the alignment browser at the bottom of that page. Although this variant has PASS in the FILTER
+field it has an FS of 172.927. <code>FS</code> is &ldquo;Phred-scaled p-value using Fisher&rsquo;s exact test to detect strand bias&rdquo;. High is bad.</p>
+
+<p>After requiring an FS &lt;= 10, the number dropped dramatically, but there were still many variants. The next filter was to
+require that the variant appear in gnomad whole genomes as we noticed that many of the candidates did not appear in whole genomes.
+To have a high enough p-value to pass the 1e-10 threshold, the allele frequency should be high enough to appear in 12K samples.
+After this, we also found that the remaining variants were frequently filtered in gnomad genomes VCF so we required them to be
+present in the genomes, not flagged, and we again checked that there were 0 male heterozygotes or homozygous alternates in the
+whole genomes as well. After this <strong>7 variants remained</strong>.</p>
+
+<p>I don&rsquo;t inted to pursue this, but it was a fun afternoon&rsquo;s tinkering. Here are those variants in case anyone has some
+insight:</p>
+
+<pre><code>X	2836140	rs202219772	G	A
+X	48270249	rs377690870	G	A
+X	101473058	rs782534766	A	G
+X	119293216	rs782542106	C	CG
+X	119293240	rs199940228	G	A
+X	134988581	rs145404090	A	G
+X	153461539	.	C	T
+</code></pre>
+
+<p><a href="https://gist.github.com/brentp/e8b400bf8bfb297c8d49f9673e32d2e4#file-male-depleted-x-py">here is the script used to find these</a></p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">brentp</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-03-14</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/noise/">noise</a>
+          
+          <a href="/tags/python/">python</a>
+          
+          <a href="/tags/variant/">variant</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+      </nav>
+    </footer>
+    
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:bpederse@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/brentp" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/brentp" class="iconfont icon-github" title="github"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    2018
+    <span class="author">brentp</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>genomics dev blog</title>
+    <link>/</link>
+    <description>Recent content on genomics dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Aug 2017 21:38:52 +0800</lastBuildDate>
+    
+        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Sun, 20 Aug 2017 21:38:52 +0800</pubDate>
+      
+      <guid>/about/</guid>
+      
+        <description>&lt;p&gt;This is a blog-ish site written in hugo
+Hugo is a static site engine written in Go.&lt;/p&gt;
+
+&lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Noise</title>
+      <link>/post/noise/</link>
+      <pubDate>Wed, 14 Mar 2018 19:35:37 -0600</pubDate>
+      
+      <guid>/post/noise/</guid>
+      
+        <description>&lt;p&gt;A while ago I had an idea to find variants on the X chromosome that are under
+recessive constraint&amp;ndash;that is that they appear in some non-zero frequency in females but never
+occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but
+could be seen in females thanks to a backup copy. I though that these might be occurring at a
+relatively high allele frequency (1 in 1000).&lt;/p&gt;
+
+&lt;p&gt;A reasonable first pass is to check, filter to variants on X that have:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;0 homozygous alternate samples in females (or males)&lt;/li&gt;
+&lt;li&gt;0 heterozygous alternate samples in males.&lt;/li&gt;
+&lt;li&gt;some number of heterozygous sites in females.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This information is easily extracted from the &lt;a href=&#34;http://gnomad.broadinstitute.org/downloads&#34;&gt;gnomad exomes VCF&lt;/a&gt;
+with 120K samples
+as it reports &lt;code&gt;GC_Male&lt;/code&gt; and &lt;code&gt;GC_Female&lt;/code&gt;
+which, for bi-allelic variants, have 3 values indicating the number of samples that
+are respectively homozygous reference, heterozygous, and homozygous alternate.&lt;/p&gt;
+
+&lt;p&gt;I created an expected proportion of alternate alleles (not samples) using the females and then used that
+as the expected success rate for testing if males were depleted for the allele. Since gnomad also reports
+the total number of alleles in males and females (accounting already for the fact that males only have 1 allele),
+it&amp;rsquo;s simple to put this into a binomial test&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import scipy.stats as ss
+from cyvcf2 import VCF
+vcf = VCF(&amp;quot;gnomad.vcf.gz&amp;quot;)
+for v in vcf(&amp;quot;X:2781479-155701382&amp;quot;): # exclude PAR
+    gcm = v.INFO[&amp;quot;GC_Male&amp;quot;]
+    gcf = v.INFO[&amp;quot;GC_Female&amp;quot;]
+    success_prob = gcf[1] / float(v.INFO[&amp;quot;AN_Female&amp;quot;])
+    # 0 successes == 0 males with an alternate out of AN_Male alleles with p defined by females.
+    p = ss.binom_test(0, v.INFO[&amp;quot;AN_Male&amp;quot;], p=success_prob)
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are other ways to do this, but I figured this was a reasonable check to start&lt;/p&gt;
+
+&lt;p&gt;After requiring a p-value of &amp;lt; 1e-10 to more than account for multiple testing, more than 500 variants popped
+out.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://gnomad.broadinstitute.org/variant/X-14937753-T-G&#34;&gt;here&lt;/a&gt; is one of the top variants. It has an allele frequency
+of 0.01553 but has never been seen as a homozygous alternate in 147,273 sampled alleles.&lt;/p&gt;
+
+&lt;p&gt;What Aaron noticed after I sent a message to slack indicating that I&amp;rsquo;d solved the genome was that it always occurs on
+the red (forward) reads in the alignment browser at the bottom of that page. Although this variant has PASS in the FILTER
+field it has an FS of 172.927. &lt;code&gt;FS&lt;/code&gt; is &amp;ldquo;Phred-scaled p-value using Fisher&amp;rsquo;s exact test to detect strand bias&amp;rdquo;. High is bad.&lt;/p&gt;
+
+&lt;p&gt;After requiring an FS &amp;lt;= 10, the number dropped dramatically, but there were still many variants. The next filter was to
+require that the variant appear in gnomad whole genomes as we noticed that many of the candidates did not appear in whole genomes.
+To have a high enough p-value to pass the 1e-10 threshold, the allele frequency should be high enough to appear in 12K samples.
+After this, we also found that the remaining variants were frequently filtered in gnomad genomes VCF so we required them to be
+present in the genomes, not flagged, and we again checked that there were 0 male heterozygotes or homozygous alternates in the
+whole genomes as well. After this &lt;strong&gt;7 variants remained&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t inted to pursue this, but it was a fun afternoon&amp;rsquo;s tinkering. Here are those variants in case anyone has some
+insight:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;X	2836140	rs202219772	G	A
+X	48270249	rs377690870	G	A
+X	101473058	rs782534766	A	G
+X	119293216	rs782542106	C	CG
+X	119293240	rs199940228	G	A
+X	134988581	rs145404090	A	G
+X	153461539	.	C	T
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://gist.github.com/brentp/e8b400bf8bfb297c8d49f9673e32d2e4#file-male-depleted-x-py&#34;&gt;here is the script used to find these&lt;/a&gt;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+  </channel>
+</rss>
