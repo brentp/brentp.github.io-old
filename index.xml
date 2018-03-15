@@ -39,7 +39,7 @@ occur in male. That is, without an extra copy, a variant might be embryonic leth
 could be seen in females thanks to a backup copy. I though that these might be occurring at a
 relatively high allele frequency (greater than 0.001). I encountered some surprises.&lt;/p&gt;
 
-&lt;p&gt;A reasonable first pass is to check, filter to variants on X that have:&lt;/p&gt;
+&lt;p&gt;A reasonable first pass is to filter to variants on X that have:&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;0 homozygous alternate samples in females (or males)&lt;/li&gt;
