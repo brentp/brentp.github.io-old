@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Programming on genomics dev blog</title>
+    <link>/categories/programming/</link>
+    <description>Recent content in Programming on genomics dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 19 Mar 2018 13:07:07 -0600</lastBuildDate>
+    
+	<atom:link href="/categories/programming/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Bugs</title>
+      <link>/post/bugs/</link>
+      <pubDate>Mon, 19 Mar 2018 13:07:07 -0600</pubDate>
+      
+      <guid>/post/bugs/</guid>
+      <description>Unfortunately for everyone, I write software with bugs. Most emails/issues I receive do not contain enough information for me to provide any way forward. The intent of this post is to provide some direction on how to send useful bug reports.
+ If a user has sent me an email indicating that my software has a bug, then, she has a prior that the fault is in the software. If I have received such an email, then in most cases, I have a strong prior that something is wrong with his usage, input, or OS (ahem, windows).</description>
+    </item>
+    
+  </channel>
+</rss>

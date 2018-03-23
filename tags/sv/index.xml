@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on genomics dev blog</title>
-    <link>/post/</link>
-    <description>Recent content in Posts on genomics dev blog</description>
+    <title>Sv on genomics dev blog</title>
+    <link>/tags/sv/</link>
+    <description>Recent content in Sv on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Tue, 20 Mar 2018 16:49:22 -0600</lastBuildDate>
     
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/sv/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,15 +19,6 @@
       <guid>/post/smoove/</guid>
       <description>smoove wraps existing software and adds some internal read-filtering to simplify calling and genotyping structural variants. It parallelizes each step as it can, for example, it streams lumpy output directly to multiple svtyper processes for genotyping. It contains several sub-commands but users with cohorts of less than about 40 samples can get a joint-called, genotyped VCF in a single command:
 smoove call -x --genotype --name $name --outdir . \ -f $fasta --processes 12 --exclude $bed *.</description>
-    </item>
-    
-    <item>
-      <title>Noise</title>
-      <link>/post/noise/</link>
-      <pubDate>Wed, 14 Mar 2018 19:35:37 -0600</pubDate>
-      
-      <guid>/post/noise/</guid>
-      <description>This afternoon, I did a quick analysis to attempt to find variants on the X chromosome that are under recessive constraint&amp;ndash;that is that they appear in some non-zero frequency in females but never occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but could be seen in females thanks to a backup copy. I thought that these might be occurring at a relatively high allele frequency (greater than 0.</description>
     </item>
     
   </channel>

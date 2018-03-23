@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Smoove - genomics dev blog</title>
+  <link rel="alternate" hreflang="en" href="/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="brentp" /><meta name="description" content="introduce smoove" />
+<meta name="keywords" content="SV, smoove" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.38-DEV" />
+
+
+<link rel="canonical" href="/post/smoove/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Smoove" />
+<meta property="og:description" content="introduce smoove" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/smoove/" />
+
+
+
+<meta property="article:published_time" content="2018-03-20T16:49:22-06:00"/>
+
+<meta property="article:modified_time" content="2018-03-20T16:49:22-06:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Smoove">
+<meta itemprop="description" content="introduce smoove">
+
+
+<meta itemprop="datePublished" content="2018-03-20T16:49:22-06:00" />
+<meta itemprop="dateModified" content="2018-03-20T16:49:22-06:00" />
+<meta itemprop="wordCount" content="697">
+
+
+
+<meta itemprop="keywords" content="smoove,SV," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Smoove"/>
+<meta name="twitter:description" content="introduce smoove"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">bpbio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">bpbio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Smoove</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-20 </span>
+        
+        <span class="more-meta"> 697 words </span>
+        <span class="more-meta"> 4 min read </span>
+      </div>
+    </header>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<p><a href="https://github.com/brentp/smoove">smoove</a> wraps existing software and adds some internal read-filtering to
+<strong>simplify calling and genotyping structural variants</strong>. It parallelizes each step as it can, for example, it
+streams <a href="https://github.com/arq5x/lumpy-sv">lumpy</a> output directly to multiple <a href="https://github.com/hall-lab/svtyper">svtyper</a>
+processes for genotyping.
+It contains several sub-commands but users with cohorts of less than about 40 samples can get a
+joint-called, genotyped VCF in a single command:</p>
+
+<pre><code class="language-Bash">smoove call -x --genotype --name $name --outdir . \
+           -f $fasta --processes 12 --exclude $bed *.bam
+</code></pre>
+
+<p>It also greatly simplifies population-level calling.
+We have recently used <code>smoove</code> to jointly call structural variants in <strong>2392 samples on AWS in about 1 hour of human time</strong>.</p>
+
+<p>This should work for any diploid species with a reference genome.</p>
+
+<h4 id="filters-and-accuracy">Filters and Accuracy</h4>
+
+<p><code>smoove</code> uses <code>lumpy_filter</code> from the <a href="https://github.com/arq5x/lumpy-sv">lumpy</a>
+repo to extract split (having a SA tag) and discordant (having an insert size outside of the expected range) reads as required
+by lumpy. If <code>$sample.split.bam</code> and <code>$sample.disc.bam</code> are present (or soft-linked) to the output directory, then <code>smoove</code> will use those
+so output from <a href="https://github.com/GregoryFaust/samblaster">samblaster</a> can be used to bypass the need for <code>lumpy_filter</code>.</p>
+
+<p>It will then further filter those reads as follows:</p>
+
+<ol>
+<li>reads where both ends are soft-clips are excluded, e.g. discard a read with cigar <code>20S106M34S</code> but keep <code>87S123M</code>.</li>
+<li>discard interchromosomal reads with &gt; 3 mismatches (determined by NM sam tag).</li>
+<li>discard interchromosomal that also has an XA tag indicating alternative matches.</li>
+<li>discard interchromosomal split-reads are discarded unless the split (SA tag) goes to the same general location as the mate.</li>
+<li>remove reads in exclude regions or on excluded chromosomes.</li>
+<li>remove reads from regions where the depths of split or discordant reads is greater than 1000. This removes regions that
+contribute to spurious calls.</li>
+<li>remove reads that are orphaned (dont have a mate) after all of the above filtering.</li>
+</ol>
+
+<p>This removes more than <strong>80%</strong> of the reads from the <code>.split.bam</code> and <code>.disc.bam</code> files that are sent to lumpy.
+In our tests, compared to vanilla lumpy, we found
+that, in a <a href="http://eichlerlab.gs.washington.edu/publications/chm1-structural-variation/">pac-bio derived truth set</a>,
+these filters removed about 4 ostensibly <em>true</em> deletions out of 1191 while removing 120 out of 910 deletions that
+were not found in the pac-bio data. There is also a considerable speed improvement and memory reduction using <code>smoove</code>
+as compared to vanilla <code>lumpy</code>. We will do more work to filter even more reads (and perhaps add some missing ones)
+to make this more efficient and accurate.</p>
+
+<h4 id="usage">Usage</h4>
+
+<p>The simplest way to get <code>smoove</code> and all dependencies is via <a href="https://hub.docker.com/r/brentp/smoove/">dockerhub</a> (and soon via bioconda).</p>
+
+<p>For a small cohort, the single command above is sufficient; for population-level calling, <code>smoove</code> should be used to first call by
+sample, or by family, or in groups of <code>n</code> (we do this by family). Then it can extract and merge all sites from all groups (internally using
+<a href="https://github.com/hall-lab/svtools">svtools</a>). Then it can genotype at those sites (again, per sample or per small group),
+and finally, it can create a square VCF using <a href="https://github.com/samtools/bcftools">bcftools</a> merge.</p>
+
+<p>Each of these commands is documented in the <a href="https://github.com/brentp/smoove">smoove README</a>.</p>
+
+<h4 id="noise">Noise</h4>
+
+<p>As indicated, I will look into additional read-filters that can be applied. If you know of or see a noise signal that could be
+used to reliably remove reads that lead to spurious calls, please comment, or open an issue on the
+<a href="https://github.com/brentp/smoove">smoove repo</a>.</p>
+
+<p>In calling the 2392 samples mentioned above, it is clear that there are several avenues to explore for filtering. One noise signature that appears to be
+associated with bad calls is when a variant has a low allele balance (hovering around 0.1) in many samples and never approaches the expected value
+of 0.5. Though we expect mapping bias, it should not be this severe; signals like this are indicative of low-level noise causing spurious calls.
+We can also look at the relative rates of split and discordant reads in these types of variants. In addition, I am working on another way to mitigate this
+type of noise that is upstream of variant-calling that I will blog about soon.</p>
+
+<h4 id="future">Future</h4>
+
+<p>We may also wrap additional tools such as a depth-based CNV caller (something I plan on looking into writing this year) or other SV callers that complement
+what <a href="https://github.com/arq5x/lumpy-sv">lumpy</a> reports. Suggestions on this are also welcome.</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/smoove/">smoove</a>
+          
+          <a href="/tags/sv/">SV</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/noise/">
+            <span class="next-text nav-default">Noise</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      Show Disqus Comments
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'brentp';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:bpederse@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/brent_p" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/brentp" class="iconfont icon-github" title="github"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    2018
+    <span class="author">brentp</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+</body>
+</html>

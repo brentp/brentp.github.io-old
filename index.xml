@@ -27,6 +27,90 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Smoove</title>
+      <link>/post/smoove/</link>
+      <pubDate>Tue, 20 Mar 2018 16:49:22 -0600</pubDate>
+      
+      <guid>/post/smoove/</guid>
+      
+        <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/brentp/smoove&#34;&gt;smoove&lt;/a&gt; wraps existing software and adds some internal read-filtering to
+&lt;strong&gt;simplify calling and genotyping structural variants&lt;/strong&gt;. It parallelizes each step as it can, for example, it
+streams &lt;a href=&#34;https://github.com/arq5x/lumpy-sv&#34;&gt;lumpy&lt;/a&gt; output directly to multiple &lt;a href=&#34;https://github.com/hall-lab/svtyper&#34;&gt;svtyper&lt;/a&gt;
+processes for genotyping.
+It contains several sub-commands but users with cohorts of less than about 40 samples can get a
+joint-called, genotyped VCF in a single command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Bash&#34;&gt;smoove call -x --genotype --name $name --outdir . \
+           -f $fasta --processes 12 --exclude $bed *.bam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It also greatly simplifies population-level calling.
+We have recently used &lt;code&gt;smoove&lt;/code&gt; to jointly call structural variants in &lt;strong&gt;2392 samples on AWS in about 1 hour of human time&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;This should work for any diploid species with a reference genome.&lt;/p&gt;
+
+&lt;h4 id=&#34;filters-and-accuracy&#34;&gt;Filters and Accuracy&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;smoove&lt;/code&gt; uses &lt;code&gt;lumpy_filter&lt;/code&gt; from the &lt;a href=&#34;https://github.com/arq5x/lumpy-sv&#34;&gt;lumpy&lt;/a&gt;
+repo to extract split (having a SA tag) and discordant (having an insert size outside of the expected range) reads as required
+by lumpy. If &lt;code&gt;$sample.split.bam&lt;/code&gt; and &lt;code&gt;$sample.disc.bam&lt;/code&gt; are present (or soft-linked) to the output directory, then &lt;code&gt;smoove&lt;/code&gt; will use those
+so output from &lt;a href=&#34;https://github.com/GregoryFaust/samblaster&#34;&gt;samblaster&lt;/a&gt; can be used to bypass the need for &lt;code&gt;lumpy_filter&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;It will then further filter those reads as follows:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;reads where both ends are soft-clips are excluded, e.g. discard a read with cigar &lt;code&gt;20S106M34S&lt;/code&gt; but keep &lt;code&gt;87S123M&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;discard interchromosomal reads with &amp;gt; 3 mismatches (determined by NM sam tag).&lt;/li&gt;
+&lt;li&gt;discard interchromosomal that also has an XA tag indicating alternative matches.&lt;/li&gt;
+&lt;li&gt;discard interchromosomal split-reads are discarded unless the split (SA tag) goes to the same general location as the mate.&lt;/li&gt;
+&lt;li&gt;remove reads in exclude regions or on excluded chromosomes.&lt;/li&gt;
+&lt;li&gt;remove reads from regions where the depths of split or discordant reads is greater than 1000. This removes regions that
+contribute to spurious calls.&lt;/li&gt;
+&lt;li&gt;remove reads that are orphaned (dont have a mate) after all of the above filtering.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This removes more than &lt;strong&gt;80%&lt;/strong&gt; of the reads from the &lt;code&gt;.split.bam&lt;/code&gt; and &lt;code&gt;.disc.bam&lt;/code&gt; files that are sent to lumpy.
+In our tests, compared to vanilla lumpy, we found
+that, in a &lt;a href=&#34;http://eichlerlab.gs.washington.edu/publications/chm1-structural-variation/&#34;&gt;pac-bio derived truth set&lt;/a&gt;,
+these filters removed about 4 ostensibly &lt;em&gt;true&lt;/em&gt; deletions out of 1191 while removing 120 out of 910 deletions that
+were not found in the pac-bio data. There is also a considerable speed improvement and memory reduction using &lt;code&gt;smoove&lt;/code&gt;
+as compared to vanilla &lt;code&gt;lumpy&lt;/code&gt;. We will do more work to filter even more reads (and perhaps add some missing ones)
+to make this more efficient and accurate.&lt;/p&gt;
+
+&lt;h4 id=&#34;usage&#34;&gt;Usage&lt;/h4&gt;
+
+&lt;p&gt;The simplest way to get &lt;code&gt;smoove&lt;/code&gt; and all dependencies is via &lt;a href=&#34;https://hub.docker.com/r/brentp/smoove/&#34;&gt;dockerhub&lt;/a&gt; (and soon via bioconda).&lt;/p&gt;
+
+&lt;p&gt;For a small cohort, the single command above is sufficient; for population-level calling, &lt;code&gt;smoove&lt;/code&gt; should be used to first call by
+sample, or by family, or in groups of &lt;code&gt;n&lt;/code&gt; (we do this by family). Then it can extract and merge all sites from all groups (internally using
+&lt;a href=&#34;https://github.com/hall-lab/svtools&#34;&gt;svtools&lt;/a&gt;). Then it can genotype at those sites (again, per sample or per small group),
+and finally, it can create a square VCF using &lt;a href=&#34;https://github.com/samtools/bcftools&#34;&gt;bcftools&lt;/a&gt; merge.&lt;/p&gt;
+
+&lt;p&gt;Each of these commands is documented in the &lt;a href=&#34;https://github.com/brentp/smoove&#34;&gt;smoove README&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&#34;noise&#34;&gt;Noise&lt;/h4&gt;
+
+&lt;p&gt;As indicated, I will look into additional read-filters that can be applied. If you know of or see a noise signal that could be
+used to reliably remove reads that lead to spurious calls, please comment, or open an issue on the
+&lt;a href=&#34;https://github.com/brentp/smoove&#34;&gt;smoove repo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In calling the 2392 samples mentioned above, it is clear that there are several avenues to explore for filtering. One noise signature that appears to be
+associated with bad calls is when a variant has a low allele balance (hovering around 0.1) in many samples and never approaches the expected value
+of 0.5. Though we expect mapping bias, it should not be this severe; signals like this are indicative of low-level noise causing spurious calls.
+We can also look at the relative rates of split and discordant reads in these types of variants. In addition, I am working on another way to mitigate this
+type of noise that is upstream of variant-calling that I will blog about soon.&lt;/p&gt;
+
+&lt;h4 id=&#34;future&#34;&gt;Future&lt;/h4&gt;
+
+&lt;p&gt;We may also wrap additional tools such as a depth-based CNV caller (something I plan on looking into writing this year) or other SV callers that complement
+what &lt;a href=&#34;https://github.com/arq5x/lumpy-sv&#34;&gt;lumpy&lt;/a&gt; reports. Suggestions on this are also welcome.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Noise</title>
       <link>/post/noise/</link>
       <pubDate>Wed, 14 Mar 2018 19:35:37 -0600</pubDate>
