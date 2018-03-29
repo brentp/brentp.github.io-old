@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>/post/arrays/</loc>
+    <lastmod>2018-03-28T20:12:07-06:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/post/smoove/</loc>
     <lastmod>2018-03-20T16:49:22-06:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -30,6 +37,20 @@
   </url>
   
   <url>
+    <loc>/tags/coverage/</loc>
+    <lastmod>2018-03-28T20:12:07-06:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/coverage/</loc>
+    <lastmod>2018-03-28T20:12:07-06:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/genomics/</loc>
     <lastmod>2018-03-14T19:35:37-06:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -45,7 +66,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-03-20T16:49:22-06:00</lastmod>
+    <lastmod>2018-03-28T20:12:07-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -73,7 +94,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2018-03-14T19:35:37-06:00</lastmod>
+    <lastmod>2018-03-28T20:12:07-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

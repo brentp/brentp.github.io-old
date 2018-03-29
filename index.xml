@@ -27,6 +27,61 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
     </item>
     
     <item>
+      <title>mosdepth ideas</title>
+      <link>/post/arrays/</link>
+      <pubDate>Wed, 28 Mar 2018 20:12:07 -0600</pubDate>
+      
+      <guid>/post/arrays/</guid>
+      
+        <description>&lt;p&gt;&lt;img src=&#34;https://user-images.githubusercontent.com/1739/29678184-da1f384c-88ba-11e7-9d98-df4fe3a59924.png&#34; alt=&#34;logo&#34; title=&#34;logo by tom sasani&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;m working on a new project and part of it is made possible by an observation that we
+stumbled on with &lt;a href=&#34;https://github.com/brentp/mosdepth&#34;&gt;mosdepth&lt;/a&gt;. It&amp;rsquo;s something that&amp;rsquo;s obvious in retrospect
+but wasn&amp;rsquo;t fully apparent to me until after &lt;code&gt;mosdepth&lt;/code&gt; was mostly written. In short, that observation is
+&lt;em&gt;computers can do stuff with arrays quickly&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The longer story behind that obvious and simple observation is as follows. &lt;code&gt;mosdepth&lt;/code&gt; is a tool to calculate
+depth from BAM/CRAM files. Rather than streaming out the coverage by keeping a heap of reads and keeping
+a cursor in each read to indicate the position and popping reads off the heap as the cursor moves past the
+end of the read and adding reads onto the heap as the genomic position advances, and &amp;hellip; [snip],
+&lt;code&gt;mosdepth&lt;/code&gt; instead
+allocates an array the size of the current chromosome, then considers each read one-at-a-time. For each,
+it increments the read start position in the array by 1 and decrements then end position by 1 discards
+that read, and proceeds with the next. Aaron used
+this same algorithm in bedtools genome coverage which uses 2 arrays instead of 1. &lt;code&gt;mosdepth&lt;/code&gt;
+does a bit more work for reads with deletions and reads that overlap their mate, but that&amp;rsquo;s it. Once
+all reads from a chromosome are consumed and added, then the coverage is the cumulative sum of all elements
+in the array.&lt;/p&gt;
+
+&lt;p&gt;Given this array for human chromosome 1 which is over &lt;strong&gt;249 million bases&lt;/strong&gt; (or 249 million int32&amp;rsquo;s), in my laptop it takes about:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;0.125 seconds&lt;/strong&gt; to calculate this cumsum to convert the array values from start/end incr/decrs to per-base coverage&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;0.204 seconds&lt;/strong&gt; to calculate the mean coverage for each of &lt;strong&gt;111626&lt;/strong&gt; exons for all known transcripts on chromosome 1.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;0.756 seconds&lt;/strong&gt; to calculate quantized coverage (contiguous bins of coverage at specified depths) of &lt;code&gt;-q 0:1:2:3:4:5:6:7:8:12:16:20:25:30:40:&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;0.508&lt;/strong&gt; seconds to calculate the cumulative coverage distribution (proportion of bases covered at 1X, 2X&amp;hellip; $NX)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&amp;hellip; and so on. So yeah, computers are good at arrays and stuff.&lt;/p&gt;
+
+&lt;p&gt;We can add a lot of utility to &lt;code&gt;mosdepth&lt;/code&gt;, all of them in a single run and it doesn&amp;rsquo;t affect the runtime appreciably since (decompressing
+and) parsing the bam dominate the run-time. Another benefit is that once everything is in the array, the times of all subsequent operations
+are &lt;strong&gt;independent&lt;/strong&gt; of the depth. I didn&amp;rsquo;t realize all of these niceties until after it was mostly implemented.&lt;/p&gt;
+
+&lt;p&gt;So, this is convenient. &lt;code&gt;mosdepth&lt;/code&gt; doesn&amp;rsquo;t have too much in the way of new ideas, it just takes full advantage. One
+thing I realized later is that depth is a special case of a more generic thing we might want to measure. For depth,
+we increment/decrement the start/end of each read (or the read&amp;rsquo;s component segments), but one could increment/decrement
+the start/end of any event. For example the per-base locations of soft-clips/hard-clips/insertions/deletions, etc. I did
+some of this in &lt;a href=&#34;https://github.com/brentp/bigly&#34;&gt;bigly&lt;/a&gt; which is based on the heap structure that we avoided with &lt;code&gt;mosdepth&lt;/code&gt;,
+but next post, I&amp;rsquo;ll talk about what I&amp;rsquo;ll be working on and how it&amp;rsquo;s useful to do this in the &lt;code&gt;mosdepth&lt;/code&gt; way.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;p.s. thanks to &lt;a href=&#34;https://twitter.com/tomsasani&#34;&gt;Tom Sasani&lt;/a&gt; (AKA &lt;a href=&#34;https://www.nature.com/articles/nbt.4060&#34;&gt;sixsani&lt;/a&gt;)
+for the logo and to Aaron for brainstorming sessions on what became the core of what became mosdepth&lt;/em&gt;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Smoove</title>
       <link>/post/smoove/</link>
       <pubDate>Tue, 20 Mar 2018 16:49:22 -0600</pubDate>
