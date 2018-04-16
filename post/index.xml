@@ -6,10 +6,21 @@
     <description>Recent content in Posts on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 28 Mar 2018 20:12:07 -0600</lastBuildDate>
+    <lastBuildDate>Mon, 16 Apr 2018 13:10:07 -0600</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Indexcov: cover your bases</title>
+      <link>/post/indexcov/</link>
+      <pubDate>Mon, 16 Apr 2018 13:10:07 -0600</pubDate>
+      
+      <guid>/post/indexcov/</guid>
+      <description>This post is to introduce indexcov and answer common question I get about interpretation.
+I have found that, as indexcov is applied to cohorts approaching size of 100 or so, the probability that it will reveal something very interesting (either a data artefact or large chromosomal anomaly) approaches 1.0. For example, who knew that there were trisomies in Simons diversity panel?
+indexcov quickly estimates coverage for whole genome BAM and CRAM files.</description>
+    </item>
     
     <item>
       <title>mosdepth ideas</title>
