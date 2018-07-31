@@ -27,6 +27,88 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
     </item>
     
     <item>
+      <title>You don&#39;t need to pileup</title>
+      <link>/post/no-pile/</link>
+      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/no-pile/</guid>
+      
+        <description>&lt;p&gt;I stumbled on this (now) obvious way of doing things that I hadn&amp;rsquo;t seen
+used much/at all; In a project soon to be released, we needed to quickly assay thousands
+of sites from BAM/CRAM files and do a sort of cheap genotyping&amp;ndash;or allele
+counting. Given this task, a common tool to reach for is the pile-up.&lt;/p&gt;
+
+&lt;p&gt;Pile-up is pretty fast but it has to do a lot of work. Even to assay a
+single site, a pileup will first get each read and a pileup structure (&lt;code&gt;bam_pileup1_t&lt;/code&gt; in htslib) for each read into memory. Each pileup structure keeps a sort of cursor in the read. This is a flexible
+approach and pretty fast when assaying multiple consecutive sites. However, especially when
+assaying sites more than a few bases apart, it does a lot of extra work so it&amp;rsquo;s probably faster to not use pileup.&lt;/p&gt;
+
+&lt;p&gt;A faster way is to take each read:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;iterate over the cigar until the requested genomic position is reached.&lt;/li&gt;
+&lt;li&gt;calculate the offest into the alignment (query) sequence for that position&lt;/li&gt;
+&lt;li&gt;check if the query base matches the reference.&lt;/li&gt;
+&lt;li&gt;discard the read.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The last item is to explicitly note that the reads are not kept in memory.
+This can be done in any language that allows access to the cigar. And can be much faster
+in interfaces like &lt;a href=&#34;http://pysam.readthedocs.io/en/latest/api.html&#34;&gt;pysam&lt;/a&gt; whose pileup API,
+ when given a query of even 1 base will create an iterator that generates a pileup for
+all positions that have an alignment that also overlaps the query location. So if a 10KB nanopore
+read overlaps that position of interest, it will generate pileups for all 10K sites in that read
+as well as the single site of interest.&lt;/p&gt;
+
+&lt;p&gt;Here is an example using &lt;a href=&#34;https://github.com/brentp/hts-nim/&#34;&gt;hts-nim&lt;/a&gt; which makes it especially palatable (IMNSHO).
+It queries a particular &lt;code&gt;chrom&lt;/code&gt; and &lt;code&gt;position&lt;/code&gt; and checks against the expected &lt;code&gt;ref_allele&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-nim&#34;&gt;
+  for aln in bam.query(chrom, position, position + 1):
+    var 
+      off = aln.start
+      qoff = 0
+      roff_only = 0
+      nalt = 0
+      nref = 0
+
+    for event in aln.cigar:
+      var cons = event.consumes
+      if cons.query:
+        qoff += event.len
+      if cons.reference:
+        off += event.len
+        if not cons.query:
+          roff_only += event.len
+
+      # continue until we get to the genomic position
+      if off &amp;lt;= position: continue
+
+      # since each cigar op can consume many bases
+      # calc how far past the requested position
+      var over = off - position - roff_only
+      # get the base 
+      var base = aln.base_at(qoff - over)
+      if base == ref_allele:
+        nref += 1
+      else:
+        nalt += 1
+
+    # now nalt and nref are the allele counts ready for use.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;the final result has &lt;code&gt;nalt&lt;/code&gt; and &lt;code&gt;nref&lt;/code&gt; which can be used for genotyping. The logic could probably be simplified
+a bit, but I wrote that in very short order and can now re-use. This can easily be extended
+to get the base-qualities at each position (hts-nim has &lt;code&gt;aln.base_quality_at(qpos)&lt;/code&gt; to complement the &lt;code&gt;aln.base_at&lt;/code&gt; seen here) and to check for indels as well as SNPs.&lt;/p&gt;
+
+&lt;p&gt;I haven&amp;rsquo;t seen this used elsewhere, perhaps due to the convenience of the pileup API or for lack of looking?
+I may try to convert this to have a sort of API (or just a function) that allows flexible querying of
+this sort that hides the cigar accounting.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Indexcov: cover your bases</title>
       <link>/post/indexcov/</link>
       <pubDate>Mon, 16 Apr 2018 13:10:07 -0600</pubDate>

@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>/post/no-pile/</loc>
+    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/post/indexcov/</loc>
     <lastmod>2018-04-16T13:10:07-06:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -58,8 +65,22 @@
   </url>
   
   <url>
+    <loc>/tags/genomics/</loc>
+    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/genomics/</loc>
     <lastmod>2018-03-14T19:35:37-06:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/nim/</loc>
+    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -73,7 +94,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-04-16T13:10:07-06:00</lastmod>
+    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

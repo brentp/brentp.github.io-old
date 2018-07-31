@@ -6,10 +6,20 @@
     <description>Recent content in Posts on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 16 Apr 2018 13:10:07 -0600</lastBuildDate>
+    <lastBuildDate>Tue, 31 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>You don&#39;t need to pileup</title>
+      <link>/post/no-pile/</link>
+      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/no-pile/</guid>
+      <description>I stumbled on this (now) obvious way of doing things that I hadn&amp;rsquo;t seen used much/at all; In a project soon to be released, we needed to quickly assay thousands of sites from BAM/CRAM files and do a sort of cheap genotyping&amp;ndash;or allele counting. Given this task, a common tool to reach for is the pile-up.
+Pile-up is pretty fast but it has to do a lot of work. Even to assay a single site, a pileup will first get each read and a pileup structure (bam_pileup1_t in htslib) for each read into memory.</description>
+    </item>
     
     <item>
       <title>Indexcov: cover your bases</title>

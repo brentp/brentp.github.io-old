@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Genomics on genomics dev blog</title>
+    <link>/tags/genomics/</link>
+    <description>Recent content in Genomics on genomics dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 31 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/genomics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>You don&#39;t need to pileup</title>
+      <link>/post/no-pile/</link>
+      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/no-pile/</guid>
+      <description>I stumbled on this (now) obvious way of doing things that I hadn&amp;rsquo;t seen used much/at all; In a project soon to be released, we needed to quickly assay thousands of sites from BAM/CRAM files and do a sort of cheap genotyping&amp;ndash;or allele counting. Given this task, a common tool to reach for is the pile-up.
+Pile-up is pretty fast but it has to do a lot of work. Even to assay a single site, a pileup will first get each read and a pileup structure (bam_pileup1_t in htslib) for each read into memory.</description>
+    </item>
+    
+  </channel>
+</rss>

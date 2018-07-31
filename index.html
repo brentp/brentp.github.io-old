@@ -146,6 +146,31 @@
     
       <article class="post bg-white">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/no-pile/">You don&#39;t need to pileup</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-07-31 </span>
+      
+      <span class="more-meta"> 540 words </span>
+      <span class="more-meta"> 3 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      I stumbled on this (now) obvious way of doing things that I hadn&rsquo;t seen used much/at all; In a project soon to be released, we needed to quickly assay thousands of sites from BAM/CRAM files and do a sort of cheap genotyping&ndash;or allele counting. Given this task, a common tool to reach for is the pile-up.
+Pile-up is pretty fast but it has to do a lot of work. Even to assay a single site, a pileup will first get each read and a pileup structure (bam_pileup1_t in htslib) for each read into memory.
+    </div>
+    <div class="read-more">
+      <a href="/post/no-pile/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/indexcov/">Indexcov: cover your bases</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-04-16 </span>
@@ -224,34 +249,6 @@ smoove call -x --genotype --name $name --outdir . \ -f $fasta --processes 12 --e
 </article>
 
     
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/noise/">Noise</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-03-14 </span>
-      <div class="post-category">
-          
-            <a href="/categories/genomics/"> Genomics </a>
-          
-        </div>
-      <span class="more-meta"> 587 words </span>
-      <span class="more-meta"> 3 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      This afternoon, I did a quick analysis to attempt to find variants on the X chromosome that are under recessive constraint&ndash;that is that they appear in some non-zero frequency in females but never occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but could be seen in females thanks to a backup copy. I thought that these might be occurring at a relatively high allele frequency (greater than 0.
-    </div>
-    <div class="read-more">
-      <a href="/post/noise/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
   </section>
 
   
@@ -271,6 +268,20 @@ smoove call -x --genotype --name $name --outdir . \ -f $fasta --processes 12 --e
 
   
   
+
+  
+  
+  <nav class="pagination">
+    
+    <li  class="active" >
+      <a href="/">1</a>
+    </li>
+    
+    <li >
+      <a href="/page/2/">2</a>
+    </li>
+    
+  </nav>
 
   
   
