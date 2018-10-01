@@ -27,6 +27,88 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Nim Hts Example</title>
+      <link>/post/nim-hts-example/</link>
+      <pubDate>Mon, 01 Oct 2018 13:17:00 -0600</pubDate>
+      
+      <guid>/post/nim-hts-example/</guid>
+      
+        <description>&lt;p&gt;Several folks have recently expressed interest in learning &lt;a href=&#34;https://nim-lang.org&#34;&gt;nim&lt;/a&gt; which
+I have found to be very useful for genomics because it has a simple syntax like python, but
+it compiles to be as fast as C. In the case of &lt;a href=&#34;https://github.com/brentp/mosdepth&#34;&gt;mosdepth&lt;/a&gt; which
+is written in nim, it is faster than the competing C implementations because of choice of
+algorithm.&lt;/p&gt;
+
+&lt;p&gt;I have started using &lt;code&gt;nim&lt;/code&gt; in my day-to-day scripting to replace python, in part, so this will be
+the first in a series of posts that show some relatively mundane code that I write like a script but
+will compile to run very fast. Hopefully, this can be informative for people who want to start doing
+some genomics data-processing with &lt;code&gt;nim&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Today, I am comparing outputs from 2 different softwares for extracting split and discordant reads
+for input to lumpy. They produce very similar, but not identical results. I want to better understand
+how they differ. They make relatively small output bams, so the process is to&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;read each bam into a table (like a python dict) keyed by read-name + read flag and with value of
+each alignment&lt;/li&gt;
+&lt;li&gt;find reads that are in 1 table and not another&lt;/li&gt;
+&lt;li&gt;print the flag since that is the main &amp;ldquo;decider&amp;rdquo; of what&amp;rsquo;s included in the output.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here is the code with comments:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-nim&#34; data-lang=&#34;nim&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; tables
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; os
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; hts
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt;
+ abam:Bam
+ bbam:Bam
+
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# two bam paths are sent in as arguments&lt;/span&gt;
+open(abam, commandLineParams()&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;) 
+open(bbam, commandLineParams()&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# define a simple function to use as a key in the table&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;proc &lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;key&lt;/span&gt;(aln:Record): &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; aln.qname &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;//&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;$&lt;/span&gt;aln.flag
+
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# fill a table with the key defined above and the value of the record&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;proc &lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;fill_table&lt;/span&gt;(bam:Bam): TableRef&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;,Record&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; newTable&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;, Record&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;()
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; aln &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; bam:
+    &lt;span style=&#34;color:#75715e&#34;&gt;# have to copy since the bam parser re-uses the underlying pointer during iteration&lt;/span&gt;
+    result&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;aln.key&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; aln.copy()
+
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# get a table for each bam.&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; atable &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fill_table(abam)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; btable &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fill_table(bbam)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# get a seq (list) of Records that are in atbl, but not in btbl&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;proc &lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;diff&lt;/span&gt;(atbl, btbl: TableRef&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;,Record&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;): &lt;span style=&#34;color:#66d9ef&#34;&gt;seq&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;Record&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  &lt;span style=&#34;color:#e6db74&#34;&gt;## return the alignments in a, but not in b&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; k, aln &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; atbl:
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;not&lt;/span&gt; (k &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; btbl):
+      result.add(aln)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# print out the differences. note that UFCS let&amp;#39;s us&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# use atable.diff(btable) which is equivalent to btable.diff(atable)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; aln &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; atable.diff(btable):
+  &lt;span style=&#34;color:#75715e&#34;&gt;# aln.flag is a uint16, but it has a string method defined on it so this&lt;/span&gt;
+  &lt;span style=&#34;color:#75715e&#34;&gt;# will print, e.g.: PAIRED,REVERSE,MREVERSE,READ2,SUPPLEMENTARY&lt;/span&gt;
+  &lt;span style=&#34;color:#75715e&#34;&gt;# indicating which bits are set in the flag&lt;/span&gt;
+  echo aln.flag&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;note the &lt;code&gt;flag&lt;/code&gt; is actually a &lt;code&gt;uint16&lt;/code&gt; but can still print as an informative string.
+This uses a method on the flag similar to python&amp;rsquo;s &lt;code&gt;__repr__&lt;/code&gt; or &lt;code&gt;__str__&lt;/code&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>You don&#39;t need to pileup</title>
       <link>/post/no-pile/</link>
       <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>

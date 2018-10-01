@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>/post/nim-hts-example/</loc>
+    <lastmod>2018-10-01T13:17:00-06:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/post/no-pile/</loc>
     <lastmod>2018-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -94,7 +101,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-01T13:17:00-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

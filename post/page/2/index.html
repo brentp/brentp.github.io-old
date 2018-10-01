@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>genomics dev blog</title>
+  <title>Archive - genomics dev blog</title>
   <link rel="alternate" hreflang="en" href="/" />
 
 <meta name="renderer" content="webkit" />
@@ -30,9 +30,9 @@
 <meta name="generator" content="Hugo 0.38-DEV" />
 
 
-<link rel="canonical" href="/" />
-<link href="/index.xml" rel="alternate" type="application/rss+xml" title="genomics dev blog" />
-  <link href="/index.xml" rel="feed" type="application/rss+xml" title="genomics dev blog" />
+<link rel="canonical" href="/post/" />
+<link href="/post/index.xml" rel="alternate" type="application/rss+xml" title="genomics dev blog" />
+  <link href="/post/index.xml" rel="feed" type="application/rss+xml" title="genomics dev blog" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -50,29 +50,29 @@
 
 
 
-<meta property="og:title" content="genomics dev blog" />
+<meta property="og:title" content="Posts" />
 <meta property="og:description" content="Notes about genomics." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/" />
+<meta property="og:url" content="/post/" />
 
 
 
-<meta property="og:updated_time" content="2017-08-20T21:38:52&#43;08:00"/>
-
-
-
-
+<meta property="og:updated_time" content="2018-03-14T19:35:37-06:00"/>
 
 
 
 
 
 
-<meta itemprop="name" content="genomics dev blog">
+
+
+
+
+<meta itemprop="name" content="Posts">
 <meta itemprop="description" content="Notes about genomics.">
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="genomics dev blog"/>
+<meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content="Notes about genomics."/>
 
 <!--[if lte IE 9]>
@@ -140,119 +140,25 @@
       <div class="content-wrapper">
         <div id="content" class="content container">
           
-  <section id="posts" class="posts">
+<section id="archive" class="archive">
     
-    
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/nim-hts-example/">Nim Hts Example</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-10-01 </span>
-      
-      <span class="more-meta"> 447 words </span>
-      <span class="more-meta"> 3 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      Several folks have recently expressed interest in learning nim which I have found to be very useful for genomics because it has a simple syntax like python, but it compiles to be as fast as C. In the case of mosdepth which is written in nim, it is faster than the competing C implementations because of choice of algorithm.
-I have started using nim in my day-to-day scripting to replace python, in part, so this will be the first in a series of posts that show some relatively mundane code that I write like a script but will compile to run very fast.
-    </div>
-    <div class="read-more">
-      <a href="/post/nim-hts-example/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
+      <div class="collection-title">
+        <h2 class="archive-year">2018</h2>
+      </div>
 
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/no-pile/">You don&#39;t need to pileup</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-07-31 </span>
-      
-      <span class="more-meta"> 540 words </span>
-      <span class="more-meta"> 3 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      I stumbled on this (now) obvious way of doing things that I hadn&rsquo;t seen used much/at all; In a project soon to be released, we needed to quickly assay thousands of sites from BAM/CRAM files and do a sort of cheap genotyping&ndash;or allele counting. Given this task, a common tool to reach for is the pile-up.
-Pile-up is pretty fast but it has to do a lot of work. Even to assay a single site, a pileup will first get each read and a pileup structure (bam_pileup1_t in htslib) for each read into memory.
-    </div>
-    <div class="read-more">
-      <a href="/post/no-pile/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
+    <div class="archive-post">
+      <span class="archive-post-time">
+        03-14
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/noise/" class="archive-post-link">
+          Noise
+        </a>
+      </span>
+    </div></section>
 
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/indexcov/">Indexcov: cover your bases</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-04-16 </span>
-      
-      <span class="more-meta"> 1186 words </span>
-      <span class="more-meta"> 6 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      This post is to introduce indexcov and answer common question I get about interpretation.
-I have found that, as indexcov is applied to cohorts approaching size of 100 or so, the probability that it will reveal something very interesting (either a data artefact or large chromosomal anomaly) approaches 1.0. For example, who knew that there were trisomies in Simons diversity panel?
-indexcov quickly estimates coverage for whole genome BAM and CRAM files.
-    </div>
-    <div class="read-more">
-      <a href="/post/indexcov/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
 
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/arrays/">mosdepth ideas</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-03-28 </span>
-      <div class="post-category">
-          
-            <a href="/categories/coverage/"> coverage </a>
-          
-        </div>
-      <span class="more-meta"> 538 words </span>
-      <span class="more-meta"> 3 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      I&rsquo;m working on a new project and part of it is made possible by an observation that we stumbled on with mosdepth. It&rsquo;s something that&rsquo;s obvious in retrospect but wasn&rsquo;t fully apparent to me until after mosdepth was mostly written. In short, that observation is computers can do stuff with arrays quickly.
-The longer story behind that obvious and simple observation is as follows. mosdepth is a tool to calculate depth from BAM/CRAM files.
-    </div>
-    <div class="read-more">
-      <a href="/post/arrays/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
 
-    
-  </section>
-
-  
-  
 
 
 
@@ -273,12 +179,12 @@ The longer story behind that obvious and simple observation is as follows. mosde
   
   <nav class="pagination">
     
-    <li  class="active" >
-      <a href="/">1</a>
+    <li >
+      <a href="/post/">1</a>
     </li>
     
-    <li >
-      <a href="/page/2/">2</a>
+    <li  class="active" >
+      <a href="/post/page/2/">2</a>
     </li>
     
   </nav>
