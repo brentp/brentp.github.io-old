@@ -58,13 +58,6 @@
   </url>
   
   <url>
-    <loc>/categories/coverage/</loc>
-    <lastmod>2018-03-28T20:12:07-06:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/coverage/</loc>
     <lastmod>2018-04-16T13:10:07-06:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -72,8 +65,8 @@
   </url>
   
   <url>
-    <loc>/categories/genomics/</loc>
-    <lastmod>2018-03-14T19:35:37-06:00</lastmod>
+    <loc>/categories/coverage/</loc>
+    <lastmod>2018-03-28T20:12:07-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -81,6 +74,13 @@
   <url>
     <loc>/tags/genomics/</loc>
     <lastmod>2018-07-31T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/genomics/</loc>
+    <lastmod>2018-03-14T19:35:37-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
