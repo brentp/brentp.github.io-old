@@ -100,8 +100,8 @@ open(bbam, commandLineParams()&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/sp
   &lt;span style=&#34;color:#75715e&#34;&gt;# aln.flag is a uint16, but it has a string method defined on it so this&lt;/span&gt;
   &lt;span style=&#34;color:#75715e&#34;&gt;# will print, e.g.: PAIRED,REVERSE,MREVERSE,READ2,SUPPLEMENTARY&lt;/span&gt;
   &lt;span style=&#34;color:#75715e&#34;&gt;# indicating which bits are set in the flag&lt;/span&gt;
-
-  echo aln.flag&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+  echo aln.flag
+  &lt;span style=&#34;color:#75715e&#34;&gt;#&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;note the &lt;code&gt;flag&lt;/code&gt; is actually a &lt;code&gt;uint16&lt;/code&gt; but can still print as an informative string.
 This uses a method on the flag similar to python&amp;rsquo;s &lt;code&gt;__repr__&lt;/code&gt; or &lt;code&gt;__str__&lt;/code&gt;.&lt;/p&gt;

@@ -79,7 +79,7 @@ I have started using nim in my day-to-day scripting to replace python, in part, 
 
 <meta itemprop="datePublished" content="2018-10-01T13:17:00-06:00" />
 <meta itemprop="dateModified" content="2018-10-01T13:17:00-06:00" />
-<meta itemprop="wordCount" content="470">
+<meta itemprop="wordCount" content="471">
 
 
 
@@ -161,7 +161,7 @@ I have started using nim in my day-to-day scripting to replace python, in part, 
       <div class="post-meta">
         <span class="post-time"> 2018-10-01 </span>
         
-        <span class="more-meta"> 470 words </span>
+        <span class="more-meta"> 471 words </span>
         <span class="more-meta"> 3 min read </span>
       </div>
     </header>
@@ -245,8 +245,8 @@ open(bbam, commandLineParams()<span style="color:#f92672">[</span><span style="c
   <span style="color:#75715e"># aln.flag is a uint16, but it has a string method defined on it so this</span>
   <span style="color:#75715e"># will print, e.g.: PAIRED,REVERSE,MREVERSE,READ2,SUPPLEMENTARY</span>
   <span style="color:#75715e"># indicating which bits are set in the flag</span>
-
-  echo aln.flag</code></pre></div>
+  echo aln.flag
+  <span style="color:#75715e">#</span></code></pre></div>
 
 <p>note the <code>flag</code> is actually a <code>uint16</code> but can still print as an informative string.
 This uses a method on the flag similar to python&rsquo;s <code>__repr__</code> or <code>__str__</code>.</p>
