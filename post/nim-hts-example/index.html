@@ -242,7 +242,7 @@ open(bbam, commandLineParams()<span style="color:#f92672">[</span><span style="c
 <span style="color:#75715e"># print out the differences. note that UFCS let&#39;s us</span>
 <span style="color:#75715e"># use atable.diff(btable) which is equivalent to btable.diff(atable)</span>
 <span style="color:#66d9ef">for</span> aln <span style="color:#f92672">in</span> atable.diff(btable):
-  echo aln.flag
+  stdout.write_line <span style="color:#f92672">$</span>aln.flag
   <span style="color:#75715e"># aln.flag is a uint16, but it has a string method defined on it so this</span>
   <span style="color:#75715e"># will print, e.g.: PAIRED,REVERSE,MREVERSE,READ2,SUPPLEMENTARY</span>
   <span style="color:#75715e"># indicating which bits are set in the flag</span>

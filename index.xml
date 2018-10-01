@@ -97,7 +97,7 @@ open(bbam, commandLineParams()&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/sp
 &lt;span style=&#34;color:#75715e&#34;&gt;# print out the differences. note that UFCS let&amp;#39;s us&lt;/span&gt;
 &lt;span style=&#34;color:#75715e&#34;&gt;# use atable.diff(btable) which is equivalent to btable.diff(atable)&lt;/span&gt;
 &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; aln &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; atable.diff(btable):
-  echo aln.flag
+  stdout.write_line &lt;span style=&#34;color:#f92672&#34;&gt;$&lt;/span&gt;aln.flag
   &lt;span style=&#34;color:#75715e&#34;&gt;# aln.flag is a uint16, but it has a string method defined on it so this&lt;/span&gt;
   &lt;span style=&#34;color:#75715e&#34;&gt;# will print, e.g.: PAIRED,REVERSE,MREVERSE,READ2,SUPPLEMENTARY&lt;/span&gt;
   &lt;span style=&#34;color:#75715e&#34;&gt;# indicating which bits are set in the flag&lt;/span&gt;
