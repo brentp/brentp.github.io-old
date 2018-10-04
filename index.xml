@@ -27,6 +27,97 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Using Nim to count sequence-motifs in a BAM</title>
+      <link>/post/nim-mundane2/</link>
+      <pubDate>Thu, 04 Oct 2018 09:23:24 -0600</pubDate>
+      
+      <guid>/post/nim-mundane2/</guid>
+      
+        <description>&lt;p&gt;This is the 2nd post describing mundane uses of &lt;a href=&#34;https://nim-lang.org&#34;&gt;nim&lt;/a&gt; in day-to-day genomics.&lt;/p&gt;
+
+&lt;p&gt;The first post is &lt;a href=&#34;https://brentp.github.io/post/nim-hts-example/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For today&amp;rsquo;s mundane task, a colleague asked me to count the occurence of 2 k-mers of length 39 in
+each of 603 BAMs of 60X coverage. We don&amp;rsquo;t care about partial matches or allowing mismatches so this
+is a pretty simple task. There are more efficient computational methods for this, but I wrote the
+simplest version, verified that it ran in &amp;lt; 2 hours for a single bam and then ran it overnight on
+a single machine with 64 CPUs and sent the results in the morning.&lt;/p&gt;
+
+&lt;p&gt;The kmers we actually used are redacted to protect the innocent.&lt;/p&gt;
+
+&lt;p&gt;The code does the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;implements a reverse-complement function and uses it on the 2 query sequences.&lt;/li&gt;
+&lt;li&gt;opens a BAM file for the path that is given as an argument to the program.&lt;/li&gt;
+&lt;li&gt;iterates over the bam and counts the presence of each forward or reverse-complemented kmer.&lt;/li&gt;
+&lt;li&gt;prints out the bam and the count of times each kmer was observed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Again, there are better algorithms for sequencer- matching (though the string-matching implementation in nim must be pretty efficient),
+but this took about 15 minutes to code and was fast enough to set running. Here is the code with explanatory comments:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-nim&#34; data-lang=&#34;nim&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; os
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; strutils
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; hts
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; kmer
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; aseq &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;some other dna sequence&amp;#34;&lt;/span&gt;.toUpperAscii
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; bseq &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;some other DNA sequence&amp;#34;&lt;/span&gt;.toUpperAscii
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# write a quick reverse-complement function&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;proc &lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;complement&lt;/span&gt;(s:&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt;): &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; {.inline.} &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; s &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;:
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;G&amp;#39;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;elif&lt;/span&gt; s &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;G&amp;#39;&lt;/span&gt;:
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;elif&lt;/span&gt; s &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;:
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;T&amp;#39;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;elif&lt;/span&gt; s &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;T&amp;#39;&lt;/span&gt;:
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; s
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;proc &lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;reverse_complement&lt;/span&gt;(xs: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;): &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+  result &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; newString(xs.len)
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i, x &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; xs:
+    &lt;span style=&#34;color:#75715e&#34;&gt;# high == len - 1&lt;/span&gt;
+    result&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;xs.high&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;i&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; complement(x)
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; raseq &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; aseq.reverse_complement
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; rbseq &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; bseq.reverse_complement
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; commandLineParams()&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; bam: Bam
+open(bam, path, threads&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; acount &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; bcount &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# this gets filled with the sequence for each read.&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; sequence: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; aln &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; bam:
+    &lt;span style=&#34;color:#75715e&#34;&gt;# check flags to avoid double-counting&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; aln.flag.dup: &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; aln.flag.supplementary: &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# fill the `sequence` string with the values from this alignment&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;discard&lt;/span&gt; aln.sequence(sequence)
+
+    acount &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; sequence.count(aseq)
+    acount &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; sequence.count(raseq)
+
+    bcount &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; sequence.count(bseq)
+    bcount &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; sequence.count(rbseq)
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; base &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; path.split(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;)
+&lt;span style=&#34;color:#75715e&#34;&gt;# just print the final file, not the full directory&lt;/span&gt;
+echo base&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;base.high&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;$&lt;/span&gt;acount &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;$&lt;/span&gt;bcount
+&lt;span style=&#34;color:#75715e&#34;&gt;#&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Nim Hts Example</title>
       <link>/post/nim-hts-example/</link>
       <pubDate>Mon, 01 Oct 2018 13:17:00 -0600</pubDate>

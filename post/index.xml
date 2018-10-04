@@ -6,10 +6,21 @@
     <description>Recent content in Posts on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 01 Oct 2018 13:17:00 -0600</lastBuildDate>
+    <lastBuildDate>Thu, 04 Oct 2018 09:23:24 -0600</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Using Nim to count sequence-motifs in a BAM</title>
+      <link>/post/nim-mundane2/</link>
+      <pubDate>Thu, 04 Oct 2018 09:23:24 -0600</pubDate>
+      
+      <guid>/post/nim-mundane2/</guid>
+      <description>This is the 2nd post describing mundane uses of nim in day-to-day genomics.
+The first post is here.
+For today&amp;rsquo;s mundane task, a colleague asked me to count the occurence of 2 k-mers of length 39 in each of 603 BAMs of 60X coverage. We don&amp;rsquo;t care about partial matches or allowing mismatches so this is a pretty simple task. There are more efficient computational methods for this, but I wrote the simplest version, verified that it ran in &amp;lt; 2 hours for a single bam and then ran it overnight on a single machine with 64 CPUs and sent the results in the morning.</description>
+    </item>
     
     <item>
       <title>Nim Hts Example</title>
