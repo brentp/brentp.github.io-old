@@ -27,6 +27,63 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
     </item>
     
     <item>
+      <title>get the least out of your CRAM files</title>
+      <link>/post/cram-speed/</link>
+      <pubDate>Thu, 11 Oct 2018 13:39:21 -0600</pubDate>
+      
+      <guid>/post/cram-speed/</guid>
+      
+        <description>&lt;p&gt;This post is highlight the speed benefit of &lt;a href=&#34;https://samtools.github.io/hts-specs/CRAMv3.pdf&#34;&gt;CRAM&lt;/a&gt; files over BAM files as it seems
+to not be widely used.&lt;/p&gt;
+
+&lt;p&gt;CRAM files are often about 50% of the size of an identical BAM for lossless compression largely due to not saving the
+sequence of each read, instead keeping only the delta to the reference sequence for the alignment. Additional savings can be gained from
+lossy compression of base-qualities and read-names.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&#34;htslib.org&#34;&gt;htslib&lt;/a&gt; implementation of CRAM has an additional advantage beyond file size: &lt;strong&gt;speed&lt;/strong&gt;. It allows the user to specify
+which of the pieces of the alignment will be needed and it only decodes those. (While this is possible in BAM format, for example as
+implemented in &lt;a href=&#34;https://github.com/JohnLonginotto/pybam&#34;&gt;pybam&lt;/a&gt; it is not available for BAM via &lt;code&gt;htslib&lt;/code&gt;.) This control can
+greatly speed processing when only a few pieces of the alignment are needed. This is quite useful since CRAM parsing can otherwise be
+the bottleneck for much genomics work.&lt;/p&gt;
+
+&lt;p&gt;In short, the most costly fields to decode are:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;base-qualities&lt;/li&gt;
+&lt;li&gt;sequence&lt;/li&gt;
+&lt;li&gt;aux tags&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;It&amp;rsquo;s possible to get better speed and parallelization by not decoding combinations of these. The plot below shows
+&lt;strong&gt;time on the Y-axis&lt;/strong&gt; (lower is better) that it took to iterate through chromosome 20 of my test cram
+for &lt;strong&gt;exclude::thread combinations on the X-axis&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/cram_exclude.png&#34; alt=&#34;times plot&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The bars a grouped by the excluded fields and colored by the number of decompression threads used.&lt;/p&gt;
+
+&lt;p&gt;Interested readers can study this in more detail, but the key points are:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;It&amp;rsquo;s possible to get a 2X speed improvement simply by not parsing the base qualities (QUAL).&lt;/li&gt;
+&lt;li&gt;If you don&amp;rsquo;t need SEQ, QUAL (base-qualities), AUX (tags like NM, SA, etc) and RG (read-groups) you can get a 3 to 4X speedup.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This is part of what makes &lt;a href=&#34;https://github.com/brentp/mosdepth&#34;&gt;mosdepth&lt;/a&gt; so fast to calculate depth on CRAM as it does not need
+the base-qualities, sequence or read-groups. That&amp;rsquo;s &lt;a href=&#34;https://github.com/brentp/mosdepth/issues/2 this]&#34;&gt;how I learned about&lt;/a&gt; feature of CRAM.&lt;/p&gt;
+
+&lt;p&gt;We have recently used this to speed up &lt;a href=&#34;https://github.com/hall-lab/svtyper&#34;&gt;svtyper&lt;/a&gt; which uses pysam; you can see how to do that &lt;a href=&#34;https://github.com/hall-lab/svtyper/commit/b43902c9bb5295d880b2c9fe8f8b29d973b82131#diff-2dee31fbd1190eb77e963360893ea86aR127&#34;&gt;here&lt;/a&gt;
+And we&amp;rsquo;ve added it to &lt;a href=&#34;https://github.com/arq5x/lumpy-sv&#34;&gt;lumpy&lt;/a&gt; to make pre-processing alignments about twice as fast for CRAM.&lt;/p&gt;
+
+&lt;p&gt;These options are available from the commandline samtools via &lt;code&gt;--input-format-options required_fields=####&lt;/code&gt; which is documented &lt;a href=&#34;http://www.htslib.org/doc/samtools.html&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I have gisted the nim code to do these timings the the python script for plotting &lt;a href=&#34;https://gist.github.com/brentp/213f214dd5677dd447150e62e2e360f5&#34;&gt;here&lt;/a&gt;
+in case anyone wants to try various combinations.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Using Nim to count sequence-motifs in a BAM</title>
       <link>/post/nim-mundane2/</link>
       <pubDate>Thu, 04 Oct 2018 09:23:24 -0600</pubDate>

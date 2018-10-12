@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>/post/cram-speed/</loc>
+    <lastmod>2018-10-11T13:39:21-06:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/post/nim-mundane2/</loc>
     <lastmod>2018-10-04T09:23:24-06:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -79,6 +86,20 @@
   </url>
   
   <url>
+    <loc>/tags/cram/</loc>
+    <lastmod>2018-10-11T13:39:21-06:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/cram/</loc>
+    <lastmod>2018-10-11T13:39:21-06:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/genomics/</loc>
     <lastmod>2018-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -94,14 +115,14 @@
   
   <url>
     <loc>/tags/nim/</loc>
-    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-11T13:39:21-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/nim/</loc>
-    <lastmod>2018-10-04T09:23:24-06:00</lastmod>
+    <lastmod>2018-10-11T13:39:21-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -122,7 +143,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-10-04T09:23:24-06:00</lastmod>
+    <lastmod>2018-10-11T13:39:21-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
