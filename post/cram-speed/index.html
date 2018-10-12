@@ -214,7 +214,7 @@ for <strong>exclude::thread combinations on the X-axis</strong>.</p>
 </ol>
 
 <p>This is part of what makes <a href="https://github.com/brentp/mosdepth">mosdepth</a> so fast to calculate depth on CRAM as it does not need
-the base-qualities, sequence or read-groups. That&rsquo;s <a href="https://github.com/brentp/mosdepth/issues/2]">how I learned about</a> this feature of CRAM.</p>
+the base-qualities, sequence or read-groups. That&rsquo;s <a href="https://github.com/brentp/mosdepth/issues/2">how I learned about</a> this feature of CRAM.</p>
 
 <p>We have recently used this to speed up <a href="https://github.com/hall-lab/svtyper">svtyper</a> which uses pysam; you can see how to do that <a href="https://github.com/hall-lab/svtyper/commit/b43902c9bb5295d880b2c9fe8f8b29d973b82131#diff-2dee31fbd1190eb77e963360893ea86aR127">here</a>
 And we&rsquo;ve added it to <a href="https://github.com/arq5x/lumpy-sv">lumpy</a> to make pre-processing alignments about twice as fast for CRAM.</p>

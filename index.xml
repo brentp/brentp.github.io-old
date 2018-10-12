@@ -70,7 +70,7 @@ for &lt;strong&gt;exclude::thread combinations on the X-axis&lt;/strong&gt;.&lt;
 &lt;/ol&gt;
 
 &lt;p&gt;This is part of what makes &lt;a href=&#34;https://github.com/brentp/mosdepth&#34;&gt;mosdepth&lt;/a&gt; so fast to calculate depth on CRAM as it does not need
-the base-qualities, sequence or read-groups. That&amp;rsquo;s &lt;a href=&#34;https://github.com/brentp/mosdepth/issues/2]&#34;&gt;how I learned about&lt;/a&gt; this feature of CRAM.&lt;/p&gt;
+the base-qualities, sequence or read-groups. That&amp;rsquo;s &lt;a href=&#34;https://github.com/brentp/mosdepth/issues/2&#34;&gt;how I learned about&lt;/a&gt; this feature of CRAM.&lt;/p&gt;
 
 &lt;p&gt;We have recently used this to speed up &lt;a href=&#34;https://github.com/hall-lab/svtyper&#34;&gt;svtyper&lt;/a&gt; which uses pysam; you can see how to do that &lt;a href=&#34;https://github.com/hall-lab/svtyper/commit/b43902c9bb5295d880b2c9fe8f8b29d973b82131#diff-2dee31fbd1190eb77e963360893ea86aR127&#34;&gt;here&lt;/a&gt;
 And we&amp;rsquo;ve added it to &lt;a href=&#34;https://github.com/arq5x/lumpy-sv&#34;&gt;lumpy&lt;/a&gt; to make pre-processing alignments about twice as fast for CRAM.&lt;/p&gt;
