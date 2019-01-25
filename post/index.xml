@@ -6,10 +6,19 @@
     <description>Recent content in Posts on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 11 Oct 2018 13:39:21 -0600</lastBuildDate>
+    <lastBuildDate>Fri, 25 Jan 2019 10:15:01 -0700</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hts Nim Sugar</title>
+      <link>/post/hts-nim-sugar/</link>
+      <pubDate>Fri, 25 Jan 2019 10:15:01 -0700</pubDate>
+      
+      <guid>/post/hts-nim-sugar/</guid>
+      <description>hts-nim is a library that allows one to use htslib via the nim programming language. Nim is a garbage-collected language that compiles to C and often has similar performance. I have become very productive in nim and especially in hts-nim and there are by now, at least a few other users of hts-nim. This post is to show how one particular feature of nim enables users to write their own functions that will be used no differently than hts-nim&amp;rsquo;s provided functionality.</description>
+    </item>
     
     <item>
       <title>get the least out of your CRAM files</title>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Hts Nim Sugar - genomics dev blog</title>
+  <link rel="alternate" hreflang="en" href="/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="brentp" />
+  <meta name="description" content="hts-nim is a library that allows one to use htslib via the nim programming language. Nim is a garbage-collected language that compiles to C and often has similar performance. I have become very productive in nim and especially in hts-nim and there are by now, at least a few other users of hts-nim. This post is to show how one particular feature of nim enables users to write their own functions that will be used no differently than hts-nim&amp;rsquo;s provided functionality." />
+<meta name="keywords" content="nim" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.38-DEV" />
+
+
+<link rel="canonical" href="/post/hts-nim-sugar/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Hts Nim Sugar" />
+<meta property="og:description" content="hts-nim is a library that allows one to use htslib via the nim programming language. Nim is a garbage-collected language that compiles to C and often has similar performance. I have become very productive in nim and especially in hts-nim and there are by now, at least a few other users of hts-nim. This post is to show how one particular feature of nim enables users to write their own functions that will be used no differently than hts-nim&rsquo;s provided functionality." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/hts-nim-sugar/" />
+
+
+
+<meta property="article:published_time" content="2019-01-25T10:15:01-07:00"/>
+
+<meta property="article:modified_time" content="2019-01-25T10:15:01-07:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Hts Nim Sugar">
+<meta itemprop="description" content="hts-nim is a library that allows one to use htslib via the nim programming language. Nim is a garbage-collected language that compiles to C and often has similar performance. I have become very productive in nim and especially in hts-nim and there are by now, at least a few other users of hts-nim. This post is to show how one particular feature of nim enables users to write their own functions that will be used no differently than hts-nim&rsquo;s provided functionality.">
+
+
+<meta itemprop="datePublished" content="2019-01-25T10:15:01-07:00" />
+<meta itemprop="dateModified" content="2019-01-25T10:15:01-07:00" />
+<meta itemprop="wordCount" content="501">
+
+
+
+<meta itemprop="keywords" content="nim,hts," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hts Nim Sugar"/>
+<meta name="twitter:description" content="hts-nim is a library that allows one to use htslib via the nim programming language. Nim is a garbage-collected language that compiles to C and often has similar performance. I have become very productive in nim and especially in hts-nim and there are by now, at least a few other users of hts-nim. This post is to show how one particular feature of nim enables users to write their own functions that will be used no differently than hts-nim&rsquo;s provided functionality."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">bpbio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">bpbio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Hts Nim Sugar</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-25 </span>
+        <div class="post-category">
+            
+              <a href="/categories/nim/"> nim </a>
+            
+          </div>
+        <span class="more-meta"> 501 words </span>
+        <span class="more-meta"> 3 min read </span>
+      </div>
+    </header>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<p><a href="https://github.com/brentp/hts-nim">hts-nim</a> is a library that allows one to use <a href="https://www.htslib.org/">htslib</a> via the <a href="https://nim-lang.org">nim</a> programming language.
+Nim is a garbage-collected language that compiles to C and often has similar performance.
+I have become very productive in <code>nim</code> and especially in <code>hts-nim</code> and there are by now, at least a few other users of <code>hts-nim</code>.
+This post is to show how one particular feature of nim enables users to write their own functions that will be used no differently than
+<code>hts-nim</code>&rsquo;s provided functionality.</p>
+
+<p>Currently, in order to access the format (sample) fields in a VCF, one must first allocate a <code>seq</code> (something like a typed python list) that gets filled.
+The example below shows a code stub to extract the <code>DP</code> (depth) and <code>GQ</code> (genotype quality) fields for each sample into those pre-allocated <code>seq</code>s.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nim" data-lang="nim"><span style="color:#66d9ef">var</span> dps <span style="color:#f92672">=</span> newSeq<span style="color:#f92672">[</span><span style="color:#66d9ef">int32</span><span style="color:#f92672">]</span>()
+<span style="color:#66d9ef">var</span> gqs <span style="color:#f92672">=</span> newSeq<span style="color:#f92672">[</span><span style="color:#66d9ef">int32</span><span style="color:#f92672">]</span>()
+<span style="color:#66d9ef">for</span> variant <span style="color:#f92672">in</span> vcf:
+    doAssert variant.format.get(<span style="color:#e6db74">&#34;DP&#34;</span>, dps) <span style="color:#f92672">==</span> Status.OK
+    doAssert variant.format.get(<span style="color:#e6db74">&#34;GQ&#34;</span>, gqs) <span style="color:#f92672">==</span> Status.OK
+    <span style="color:#75715e"># do stuff with dps and gqs ...</span></code></pre></div>
+
+<p>This lets <code>hts-nim</code> fill the <code>dps</code> and <code>gqs</code> sequences without allocating memory to provides maximal
+performance. It&rsquo;s not much of a burden, but it might be nice to have a function that just returns the values and raises
+an error if the field is not found so that pre-allocation is not necesary.</p>
+
+<p>Since nim has <a href="https://en.wikipedia.org/wiki/Uniform_Function_Call_Syntax">universal function call syntax (UFCS)</a>,
+it&rsquo;s easy to write some <em>sugar</em> that can be used to get values without pre-allocating if that&rsquo;s what&rsquo;s required.
+Here&rsquo;s how I&rsquo;d write that (though see note at end of post).</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nim" data-lang="nim"><span style="color:#66d9ef">proc </span><span style="color:#a6e22e">ints</span><span style="color:#f92672">*</span>(f:FORMAT, field: <span style="color:#66d9ef">string</span>): <span style="color:#66d9ef">seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">int32</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span>
+  <span style="color:#66d9ef">var</span> vals <span style="color:#f92672">=</span> newSeq<span style="color:#f92672">[</span><span style="color:#66d9ef">int32</span><span style="color:#f92672">]</span>()
+  <span style="color:#66d9ef">if</span> variant.format.get(field, vals) <span style="color:#f92672">!=</span> Status.OK:
+    <span style="color:#66d9ef">raise</span> newException(KeyError, <span style="color:#e6db74">&#34;error getting field:&#34;</span> <span style="color:#f92672">&amp;</span> field <span style="color:#f92672">&amp;</span> <span style="color:#e6db74">&#34;. &#34;</span> <span style="color:#f92672">&amp;</span> <span style="color:#f92672">$</span>Status.OK
+  <span style="color:#66d9ef">return</span> vals</code></pre></div>
+
+<p>This will throw an exception if the requested field does not exist. Note that the <code>*</code> after <code>ints</code> means
+the function is exported for use outside the currrent module, which is what we want here.</p>
+
+<p>This function could be in a file named <code>sugar.nim</code> and then could be used as:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nim" data-lang="nim"><span style="color:#f92672">import</span> hts<span style="color:#f92672">/</span>vcf
+<span style="color:#f92672">import</span> .<span style="color:#f92672">/</span>sugar
+
+<span style="color:#66d9ef">for</span> variant <span style="color:#f92672">in</span> vcf:
+    <span style="color:#66d9ef">var</span> dps <span style="color:#f92672">=</span> variant.format.ints(<span style="color:#e6db74">&#34;DP&#34;</span>) <span style="color:#75715e"># note these could raise exceptions.</span>
+    <span style="color:#66d9ef">var</span> gqs <span style="color:#f92672">=</span> variant.format.ints(<span style="color:#e6db74">&#34;GQ&#34;</span>)
+    <span style="color:#75715e"># do stuff with dps and gqs ...</span></code></pre></div>
+
+<p>This shows the <code>UFCS</code> as <code>ints(variant.format, &quot;DP&quot;)</code> is equivalent to <code>variant.format.ints(&quot;DP&quot;)</code>.</p>
+
+<p>This means that users are not limited to the syntax and functionality that <code>hts-nim</code> provides, they can
+write their own functions and use them as ergonomically as those that are part of hts-nim. Since hts-nim
+errs on the side of efficiency rather than ergonomics, functions like these could make some nice syntactic
+sugar for using <code>hts-nim</code> as a sort of scripting language for processing genomic data.</p>
+
+<h2 id="side-note">side note.</h2>
+
+<p>The above sugar function <code>ints</code> could be written more succinctly using nim<code>s</code>result<code>variable along with the
+fact that</code>seq<code>s are never</code>nil` as:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nim" data-lang="nim"><span style="color:#66d9ef">proc </span><span style="color:#a6e22e">ints</span><span style="color:#f92672">*</span>(f:FORMAT, field: <span style="color:#66d9ef">string</span>): <span style="color:#66d9ef">seq</span><span style="color:#f92672">[</span><span style="color:#66d9ef">int32</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span>
+  <span style="color:#66d9ef">if</span> variant.format.get(field, result) <span style="color:#f92672">!=</span> Status.OK:
+    <span style="color:#66d9ef">raise</span> newException(KeyError, <span style="color:#e6db74">&#34;error getting field:&#34;</span> <span style="color:#f92672">&amp;</span> field <span style="color:#f92672">&amp;</span> <span style="color:#e6db74">&#34;. &#34;</span> <span style="color:#f92672">&amp;</span> <span style="color:#f92672">$</span>Status.OK</code></pre></div>
+
+<p>where result will be initalized by nim and set to the proper size (and filled) by hts-nim.</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/nim/">nim</a>
+          
+          <a href="/tags/hts/">hts</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/cram-speed/">
+            <span class="next-text nav-default">get the least out of your CRAM files</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+      Show Disqus Comments
+    </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    function load_disqus() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'brentp';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+        $('#load_disqus').remove();
+    };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:bpederse@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/brent_p" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/brentp" class="iconfont icon-github" title="github"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="author">brentp</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+</body>
+</html>
