@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>genomics dev blog</title>
+  <title>Polygenic Risk Scores - genomics dev blog</title>
   <link rel="alternate" hreflang="en" href="/" />
 
 <meta name="renderer" content="webkit" />
@@ -19,7 +19,9 @@
 
 
 <meta name="author" content="brentp" />
-  <meta name="description" content="Notes about genomics." />
+  <meta name="description" content="
+" />
+
   <meta name="keywords" content="genomics, bioinformatics, coding" />
 
 
@@ -30,9 +32,7 @@
 <meta name="generator" content="Hugo 0.38-DEV" />
 
 
-<link rel="canonical" href="/" />
-<link href="/index.xml" rel="alternate" type="application/rss+xml" title="genomics dev blog" />
-  <link href="/index.xml" rel="feed" type="application/rss+xml" title="genomics dev blog" />
+<link rel="canonical" href="/post/polygenic-risk-scores/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -50,30 +50,41 @@
 
 
 
-<meta property="og:title" content="genomics dev blog" />
-<meta property="og:description" content="Notes about genomics." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/" />
+<meta property="og:title" content="Polygenic Risk Scores" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/polygenic-risk-scores/" />
 
 
 
-<meta property="og:updated_time" content="2018-03-20T16:49:22-06:00"/>
+<meta property="article:published_time" content="2018-08-14T13:18:12-06:00"/>
 
-
-
-
-
-
+<meta property="article:modified_time" content="2018-08-14T13:18:12-06:00"/>
 
 
 
 
-<meta itemprop="name" content="genomics dev blog">
-<meta itemprop="description" content="Notes about genomics.">
 
+
+
+
+
+
+
+<meta itemprop="name" content="Polygenic Risk Scores">
+<meta itemprop="description" content="">
+
+
+<meta itemprop="datePublished" content="2018-08-14T13:18:12-06:00" />
+<meta itemprop="dateModified" content="2018-08-14T13:18:12-06:00" />
+<meta itemprop="wordCount" content="149">
+
+
+
+<meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="genomics dev blog"/>
-<meta name="twitter:description" content="Notes about genomics."/>
+<meta name="twitter:title" content="Polygenic Risk Scores"/>
+<meta name="twitter:description" content=""/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -139,108 +150,68 @@
     <main id="main" class="main bg-llight">
       <div class="content-wrapper">
         <div id="content" class="content container">
-          
-  <section id="posts" class="posts">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Polygenic Risk Scores</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-08-14 </span>
+        
+        <span class="more-meta"> 149 words </span>
+        <span class="more-meta"> 1 min read </span>
+      </div>
+    </header>
+
     
     
+
     
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/smoove/">Smoove</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-03-20 </span>
+    <div class="post-content">
+      <p></p>
+
+<p>Recently, the <em>Nature Genetics</em> letter <a href="https://www.nature.com/articles/s41588-018-0183-z">Genome-wide polygenic scores for common diseases identify individuals with risk equivalent to monogenic mutations</a> got a lot of
+attention, including in the <a href="https://www.nytimes.com/2018/08/13/health/genetic-test-heart-disease.html">New York Times</a>. Here are some
+things I notice about the paper. I am happy to have any corrections to my thinking as comments/tweets/ or whatever.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>The authors look at summary stats (p-values and betas/odd-ratios) for 5 phenotypes: coronary artery disease (CAD), atrial fibrilation (AF), type 2 diabetes, inflammatory bowel
+disease, and breast cancer. They use a &ldquo;validation set&rdquo; of ~120K people and a &ldquo;test set&rdquo; of 289K people of British ancestry. They test 25 or so thresholds/parameter combinations
+to find the p-value and LD cutoffs for variants to use in the risk score for each phenotype. For each phenotype they show an increase in prevalence at the high GPS scores derived from the optimal cutoff for that phenotype.</p>
+
+<ol>
+<li>The authors</li>
+</ol>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
       
-      <span class="more-meta"> 697 words </span>
-      <span class="more-meta"> 4 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/nim-hts-example/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Nim Hts Example</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/no-pile/">
+            <span class="next-text nav-default">You don&#39;t need to pileup</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
     
-    <div class="post-summary">
-      smoove wraps existing software and adds some internal read-filtering to simplify calling and genotyping structural variants. It parallelizes each step as it can, for example, it streams lumpy output directly to multiple svtyper processes for genotyping. It contains several sub-commands but users with cohorts of less than about 40 samples can get a joint-called, genotyped VCF in a single command:
-smoove call -x --genotype --name $name --outdir . \ -f $fasta --processes 12 --exclude $bed *.
-    </div>
-    <div class="read-more">
-      <a href="/post/smoove/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/noise/">Noise</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-03-14 </span>
-      <div class="post-category">
-          
-            <a href="/categories/genomics/"> Genomics </a>
-          
-        </div>
-      <span class="more-meta"> 587 words </span>
-      <span class="more-meta"> 3 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      This afternoon, I did a quick analysis to attempt to find variants on the X chromosome that are under recessive constraint&ndash;that is that they appear in some non-zero frequency in females but never occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but could be seen in females thanks to a backup copy. I thought that these might be occurring at a relatively high allele frequency (greater than 0.
-    </div>
-    <div class="read-more">
-      <a href="/post/noise/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-  </section>
-
-  
-  
-
-
-
-  
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-  <nav class="pagination">
-    
-    <li >
-      <a href="/">1</a>
-    </li>
-    
-    <li >
-      <a href="/page/2/">2</a>
-    </li>
-    
-    <li  class="active" >
-      <a href="/page/3/">3</a>
-    </li>
-    
-  </nav>
-
-  
-  
-
-
-
-
+  </article>
         </div>
       </div>
     </main>

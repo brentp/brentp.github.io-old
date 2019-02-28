@@ -57,7 +57,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-07-31T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2018-10-01T13:17:00-06:00"/>
 
 
 
@@ -146,6 +146,35 @@
     
       <article class="post bg-white">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/nim-hts-example/">Nim Hts Example</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-10-01 </span>
+      <div class="post-category">
+          
+            <a href="/categories/nim/"> nim </a>
+          
+        </div>
+      <span class="more-meta"> 470 words </span>
+      <span class="more-meta"> 3 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Several folks have recently expressed interest in learning nim which I have found to be very useful for genomics because it has a simple syntax like python, but it compiles to be as fast as C. In the case of mosdepth which is written in nim, it is faster than the competing C implementations because of choice of algorithm.
+I have started using nim in my day-to-day scripting to replace python, in part, so this will be the first in a series of posts that show some relatively mundane code that I write like a script but will compile to run very fast.
+    </div>
+    <div class="read-more">
+      <a href="/post/nim-hts-example/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/no-pile/">You don&#39;t need to pileup</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-07-31 </span>
@@ -218,31 +247,6 @@ The longer story behind that obvious and simple observation is as follows. mosde
     </div>
     <div class="read-more">
       <a href="/post/arrays/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/smoove/">Smoove</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-03-20 </span>
-      
-      <span class="more-meta"> 697 words </span>
-      <span class="more-meta"> 4 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      smoove wraps existing software and adds some internal read-filtering to simplify calling and genotyping structural variants. It parallelizes each step as it can, for example, it streams lumpy output directly to multiple svtyper processes for genotyping. It contains several sub-commands but users with cohorts of less than about 40 samples can get a joint-called, genotyped VCF in a single command:
-smoove call -x --genotype --name $name --outdir . \ -f $fasta --processes 12 --exclude $bed *.
-    </div>
-    <div class="read-more">
-      <a href="/post/smoove/" class="read-more-link">Read more</a>
     </div>
     
   </div>

@@ -27,6 +27,48 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Static</title>
+      <link>/post/static/</link>
+      <pubDate>Thu, 28 Feb 2019 11:32:22 -0700</pubDate>
+      
+      <guid>/post/static/</guid>
+      
+        <description>&lt;p&gt;After recent twitter discussions about usable software, I thought that one thing I could do to
+relieve a common problem of users of my software would be to build static binaries.
+I know this would be helpful because I never get any questions/bugs about installs with
+&lt;a href=&#34;https://github.com/brentp/vcfanno&#34;&gt;vcfanno&lt;/a&gt; or &lt;a href=&#34;https://github.com/brentp/goleft&#34;&gt;indexcov&lt;/a&gt;
+for which I provide static binaries (thanks to use of #golang) even though they are (I think) widely used.&lt;/p&gt;
+
+&lt;p&gt;Since most of my tools are command-line apps, that rely on htslib this can be difficult. I ended up
+using a docker image based on alpine linux and building an htslib without libcurl. Alpine linux uses
+musl so we can avoid the warnings/errors seen when trying to use a binary
+built with a new version of (g)libc on a system with an older (g)libc.&lt;/p&gt;
+
+&lt;p&gt;The docker image is &lt;a href=&#34;https://hub.docker.com/r/brentp/musl-hts-nim&#34;&gt;musl-hts-nim&lt;/a&gt; and, using that, I made
+a static binary so that, given a nim file, for example &lt;a href=&#34;https://github.com/brentp/hts-nim-tools/issues/5#issuecomment-462097499&#34;&gt;this one&lt;/a&gt; where I recently helped Ming (note in that issue, Ming had problems with libhts.so which would have been avoided with a static binary), we can
+create a static binary with:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ hts_nim_static_builder -s ./atac.nim --deps &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hts@&amp;gt;=0.2.7&amp;#34;&lt;/span&gt; --deps &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;binaryheap&amp;#34;&lt;/span&gt;
+#&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will create a static binary in &lt;code&gt;atac&lt;/code&gt;:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ ldd ./atac
+    statically linked
+$ file ./atac
+    ./atac: ELF &lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;-bit LSB shared object, x86-64, version &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;SYSV&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, dynamically linked, not stripped
+#&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hts_nim_static_builder&lt;/code&gt; is avaiable &lt;a href=&#34;https://github.com/brentp/hts-nim/releases/tag/v0.2.8&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;See the &lt;a href=&#34;https://github.com/brentp/hts-nim#static-builds&#34;&gt;README section&lt;/a&gt; for more information and advanced usage.&lt;/p&gt;
+
+&lt;p&gt;I hope that this will make using &lt;a href=&#34;https://github.com/brentp/hts-nim&#34;&gt;hts-nim&lt;/a&gt; even more enticing for building command-line tools
+that utilize htslib.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Hts Nim Sugar</title>
       <link>/post/hts-nim-sugar/</link>
       <pubDate>Fri, 25 Jan 2019 10:15:01 -0700</pubDate>
