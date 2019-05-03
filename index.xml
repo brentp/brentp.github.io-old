@@ -27,6 +27,224 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
     </item>
     
     <item>
+      <title>filtering variants in rare disease trios</title>
+      <link>/post/variant-filter/</link>
+      <pubDate>Wed, 01 May 2019 12:25:04 -0600</pubDate>
+      
+      <guid>/post/variant-filter/</guid>
+      
+        <description>&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;In rare, mendelian disease research, given a trio of an affected kid, healthy mom and healthy dad, we
+seek genetic variation that can explain the &amp;ldquo;phenotype&amp;rdquo; in the kid. In this scenario,
+either &lt;a href=&#34;https://medlineplus.gov/ency/article/002052.htm&#34;&gt;recessive&lt;/a&gt; or
+&lt;a href=&#34;https://www.cancer.gov/publications/dictionaries/genetics-dictionary/def/de-novo-mutation&#34;&gt;de novo (dominant)&lt;/a&gt;
+could match the inheritance pattern.&lt;/p&gt;
+
+&lt;p&gt;We expect between 0 and 2 true &lt;strong&gt;de novo&lt;/strong&gt; variants per exome, but given the vagaries of sequencing,
+we can find many more and it&amp;rsquo;s unclear how many recessive (compound or single-site) variants we should expect
+per exome and what type of filtering is required to get that to a reasonable level. This post is to look at
+various filtering strategies in the context of rare disease trios. I did this to educate myself on what type
+of filtering is effective. And filtering &lt;strong&gt;is&lt;/strong&gt; needed, because, for example, a trio in my test-cohort would have ~150
+putative &lt;em&gt;de novo&lt;/em&gt; variants if we looked only at genotype.&lt;/p&gt;
+
+&lt;p&gt;The filters (beyond the genotypes for inheritance pattern) that I&amp;rsquo;ll consider are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;FILTER&lt;/code&gt;: variant FILTER field is PASS&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GQ&lt;/code&gt;: genotype quality &amp;gt; 10&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AB&lt;/code&gt;: allele balance (alt alleles / (ref + alt)) between 0.25 and 0.75&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DP&lt;/code&gt;: depth &amp;gt; 7&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gnomad_popmax_af&lt;/code&gt;: &lt;a href=&#34;https://gnomad.broadinstitute.org/&#34;&gt;gnomAD&lt;/a&gt; population max allele frequence &amp;lt; 0.001&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gnomad_filter&lt;/code&gt;: variant must have a PASS filter in gnomAD&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These filters will be applied singly and then combined so we can evaluate how each reduces the number of putative
+variants to consider. The exact values I have chosen are arbitrary, but defensible and changing them to other sane
+values does not change the conclusions at all (or the actual resulting counts much). And especially when multiple
+criteria are combined as they will be in a real analysis, the exact cutoff tends to matter less.&lt;/p&gt;
+
+&lt;p&gt;Note that since this is in the context of rare disease, we can require the variant to be extremely rare in gnomAD,
+if, instead, we are just looking for &lt;em&gt;de novo&lt;/em&gt; variants that may not contribute to disease, the allele frequency filter
+would be less useful.&lt;/p&gt;
+
+&lt;p&gt;Not for nothing, I&amp;rsquo;ll do this analysis using &lt;a href=&#34;https://github.com/brentp/slivar&#34;&gt;slivar&lt;/a&gt; and the full command to do the
+entire analysis will be at the end of the post, but I&amp;rsquo;ll describe each step as well.&lt;/p&gt;
+
+&lt;p&gt;For &lt;em&gt;recessive&lt;/em&gt; inheritance mode, we&amp;rsquo;ll integrate variants within a gene and use phase-by-inheritance to ensure that
+the variants are on opposite haplotypes. That will also be done relatively automatically by &lt;a href=&#34;https://github.com/brentp/slivar/wiki/rare-disease#compound-heterozygotes&#34;&gt;slivar&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The test-cohort is a set of 149 trios jointly-called using GATK. The analyses below will not look at the functional status of the variant,
+doing so would further cull the number of candidate causal variants.&lt;/p&gt;
+
+&lt;h2 id=&#34;denovo&#34;&gt;Denovo&lt;/h2&gt;
+
+&lt;p&gt;The plot below shows the entirety of the results for the &lt;em&gt;de novo&lt;/em&gt; analysis.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Each point represents a trio&lt;/li&gt;
+&lt;li&gt;The x-axis (and the colors) separate different possible filtering strategies, generally moving to more strigent left to right.&lt;/li&gt;
+&lt;li&gt;The y-axis indicates the putative number of &lt;strong&gt;de novo&lt;/strong&gt; variants.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/variant-filter-denovo.png&#34; alt=&#34;de novo plot&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The left-most, red cluster labelled &lt;strong&gt;DN&lt;/strong&gt; is the number of variants that are found using only the genotypes&amp;ndash;the kid must be heterozygous and
+the parents homozgyous reference.&lt;/p&gt;
+
+&lt;p&gt;Then, moving right:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;blue (DN_pass_not_multiallelic): if we require variants to have a PASS FILTER, we can already dramatically reduce the number of variants.&lt;/li&gt;
+&lt;li&gt;green (DN_AB): requires an allele balance in the kid &amp;gt; 0.25 and &amp;lt; 0.75 and 1 or fewer total alternate counts in the parents.&lt;/li&gt;
+&lt;li&gt;purple (DN_depth_GQ): requires all samples to have depth &amp;gt; 7 and genotype quality &amp;gt; 10&lt;/li&gt;
+&lt;li&gt;orange (DN_gnomad): requires the variant to be &amp;lsquo;PASS&amp;rsquo; in gnomAD and to have a population max allele frequency &amp;lt; 0.001&lt;/li&gt;
+&lt;li&gt;yellow (DN_AB_depth): combines the &lt;code&gt;DN_AB&lt;/code&gt; and &lt;code&gt;DN_depth_GQ&lt;/code&gt; filters.&lt;/li&gt;
+&lt;li&gt;brown (denovo): combines the &lt;code&gt;DN_AB_depth&lt;/code&gt; and &lt;code&gt;DN_gnomad&lt;/code&gt; and &lt;code&gt;DN_pass_not_multiallelic&lt;/code&gt; filters&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Note that the inset zooms in on the final 2 sets of variants (&lt;code&gt;DN_AB_depth&lt;/code&gt; and &lt;code&gt;denovo&lt;/code&gt;). In reality, a researcher is likely to
+examine only variants in the &lt;code&gt;denovo&lt;/code&gt; group, meaning that she can examine between 0 and 4 variants per sample.&lt;/p&gt;
+
+&lt;p&gt;Also note that although the depth and allele balance filters (in yellow) still leave a couple of samples with &amp;gt; 100 candidate variants
+those are removed when the additional gnomAD filters are applied.&lt;/p&gt;
+
+&lt;h3 id=&#34;combining-more-lenient-filters&#34;&gt;Combining more lenient filters&lt;/h3&gt;
+
+&lt;p&gt;That shows how effective combining depth, allele balance, gnomAD allele frequency and FILTER can be. And the blue swarm shows that GATK
+is in fact, a very good caller, yielding very few bad (spurious &lt;strong&gt;de novo&lt;/strong&gt;) calls that have a PASS filter.&lt;/p&gt;
+
+&lt;p&gt;To demonstrate this combination effect further, we compare the final &lt;code&gt;denovo&lt;/code&gt; set of calls from above with a &lt;em&gt;lenient&lt;/em&gt; set that
+requires only:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;depth 5 or more (instead of 7)&lt;/li&gt;
+&lt;li&gt;genotype quality of 5 or more (instead of 10)&lt;/li&gt;
+&lt;li&gt;allele balance between 0.2 and 0.8 (instead of 0.25 and 0.75)&lt;/li&gt;
+&lt;li&gt;gnomAD allele frequency &amp;lt; 0.01 (instead of 0.001)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These are set low enough to make an analyst squirm, but not so low as to be unreasonable.&lt;/p&gt;
+
+&lt;p&gt;This increases the total number of &lt;em&gt;de novo&lt;/em&gt; calls from 172 in the set plotted above to 188, meaning that this yields 1 additional
+candidate &lt;em&gt;de novo&lt;/em&gt; for about every three trios. In short, relaxing constraints might be a reasonable strategy from the start because
+once a number of filters are combined, the likelihood of a questionable variant sneaking through are low.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt; that this has not yet filtered on the functional status (missense/stop-gained/etc.) of the variant, which would lower the number
+even more.&lt;/p&gt;
+
+&lt;h2 id=&#34;recessive-variants&#34;&gt;Recessive Variants&lt;/h2&gt;
+
+&lt;p&gt;Recall that recessive variants are inherited on different haplotypes, either at a single site or as a compound heterozygote. In order
+to call compound heterozygotes, we must aggregate variants by gene and then phase by inheritance. Given 2 sites in a compound het in a
+trio with unaffected parents and affected kid:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;kid: 0/1, mom: 0/1, dad: 0/0&lt;/li&gt;
+&lt;li&gt;kid: 0/1, mom: 0/0, dad: 0/1&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;we know that the kid inherited the alternate allele at site 1 from mom and at site 2 from dad and therefore, they must be on
+different haplotypes and could therefore knock out both copies of the gene.&lt;/p&gt;
+
+&lt;p&gt;In order to find sites like this, we must first find sites that are heterozygotes in the kid and 1 and only 1 parent and
+then use the phase-by-inheritance logic and gene aggregation to find pairs like above. An additional wrinkle is that
+we will also allow 1 of the pair of sites to be a &lt;em&gt;de novo&lt;/em&gt;; though we can&amp;rsquo;t phase the &lt;em&gt;de novo&lt;/em&gt;, we expect
+there to be few enough putative &lt;em&gt;de novo&lt;/em&gt;&amp;rsquo;s that it should not yield too many false positives.&lt;/p&gt;
+
+&lt;p&gt;Finally, we can also find sites that are simple autosomal recessives where both parents are heterozygotes, and the kid
+is homozygous alternate, along with x-linked recessives where a son receives a variant allele from mom that appears as a
+heterozygote in mom and as homozygous alternate in the son (since he has only 1 copy of X).&lt;/p&gt;
+
+&lt;p&gt;The plot below shows the entirety of the results for the recessive analysis.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Each point represents a trio&lt;/li&gt;
+&lt;li&gt;The x-axis (and the colors) separate different possible filtering strategies, generally moving to more strigent left to right.&lt;/li&gt;
+&lt;li&gt;The y-axis indicates the putative number of recessive variants.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;/img/variant-filter-recessive.png&#34; alt=&#34;recessive plot&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this plot, the left-most, red swarm, labeled &amp;lsquo;AR&amp;rsquo;, is the meta-set of variants that could possibly be any type of recessive variant. It only requires kid to be heterozygous or homozygous and mom or dad to be heterozygous and neither mom nor dad to be homozygous alternate&lt;/p&gt;
+
+&lt;p&gt;Then continuing right across the plot:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;blue (AR_pass_not_MA): limits the &lt;code&gt;AR&lt;/code&gt; variants to PASS and not multi-allelic&lt;/li&gt;
+&lt;li&gt;green (AR_AB): limits the &lt;code&gt;AR&lt;/code&gt; variants to have AB &amp;gt; 0.25 and AB &amp;lt; 0.75 for sites where the kid is heterozygous (remember this set also incluces variants where the kid is hom-alt)&lt;/li&gt;
+&lt;li&gt;purple (AR_depth): limits AR variants to have depth &amp;gt; 7.&lt;/li&gt;
+&lt;li&gt;orange (AR_AB_depth_GQ): requires variants to pass &lt;code&gt;AR_AB&lt;/code&gt; and &lt;code&gt;AR_depth&lt;/code&gt; and requires kid, mom, and dad to have GQ &amp;gt; 10&lt;/li&gt;
+&lt;li&gt;AR_gnomad (yellow): requires the &lt;code&gt;AR&lt;/code&gt; variant to have a populatiom max allele frequency &amp;lt; 0.005 in gnomad.&lt;/li&gt;
+&lt;li&gt;AR_filtered (brown): requires &lt;code&gt;AR_AB_depth&lt;/code&gt;, &lt;code&gt;AR_pass_not_MA&lt;/code&gt;, and &lt;code&gt;AR_gnomad&lt;/code&gt; &amp;ndash; so depth &amp;gt; 7, GQ &amp;gt; 10, PASS and gnomad frequency &amp;lt; 0.005&lt;/li&gt;
+&lt;li&gt;autorec (pink): this requires &lt;code&gt;AR_filtered&lt;/code&gt; and mom and dad to be heterozygous and kid homozygous alternate &amp;ndash; so this is a single-site recessive&lt;/li&gt;
+&lt;li&gt;XLR (gray): X-Linked-Recessive. requires the mom to be het, dad hom ref, and kid male and hom-alt, PASS, on the X chromosome, depth &amp;gt; 7, GQ &amp;gt; 10, mom AB &amp;gt; 0.2 and &amp;lt; 0.8.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;compound_het&lt;/code&gt;: this takes the &lt;code&gt;AR_filtered&lt;/code&gt; variants and the &lt;code&gt;denovo&lt;/code&gt; variants from above and aggregates by gene and phases-by-inheritance.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;autorec&lt;/code&gt;, &lt;code&gt;XLR&lt;/code&gt;, and &lt;code&gt;compound_het&lt;/code&gt; are what an analyst would examine. Although the base-line is much higher here, filtering with gnomad (yellow) is
+very effective, dropping the number of variants from ~10,000 to ~500. The additional drop to compound-het (red) shows the power of phase-by-inheritance. Note that
+the numbers for compound-hets are &lt;strong&gt;variants not pairs&lt;/strong&gt; so in this cohort, we&amp;rsquo;d look at fewer than 5 genes per trio, on average. Again, remember that this
+does not consider the functional effect of the variant so that would further reduce the number of variants here.&lt;/p&gt;
+
+&lt;p&gt;On average, an analyst would have to look at about &amp;lt; 10 single-site autosomal recessives (pink), 1 or 2 x-linked-recessive variants (gray) and about 5 compound-het pairs per trio.
+In addition to the 1-2 &lt;em&gt;de novo&lt;/em&gt; variants per trio, this simple filtering results in 15 high-quality candidates for the most common analyses
+performed in rare disease research.&lt;/p&gt;
+
+&lt;h2 id=&#34;slivar&#34;&gt;Slivar&lt;/h2&gt;
+
+&lt;p&gt;All of the filtering described above was done with one &lt;a href=&#34;https://github.com/brentp/slivar&#34;&gt;slivar&lt;/a&gt; command followed by an additional one to call compound heterozygotes.
+&lt;code&gt;slivar&lt;/code&gt; allows users to write simple (javascript) expressions that get applied to every trio (or sample or user-specified group) inferred from a pedigree file in the VCF.&lt;/p&gt;
+
+&lt;p&gt;Below is an &lt;strong&gt;especially hairy&lt;/strong&gt; command because it applies every filtering strategy plotted above. For actual research, only the final, combined commands
+are needed, so please use the simple commands
+documented &lt;a href=&#34;https://github.com/brentp/slivar/wiki/rare-disease#full-analysis-for-trios-with-unaffected-parents&#34;&gt;here&lt;/a&gt; that will be effectively identical to this.&lt;/p&gt;
+
+&lt;p&gt;However, for the sake of showing the power and flexibility of &lt;code&gt;slivar&lt;/code&gt;, here is the full command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;slivar expr --vcf $bcf --ped $ped \$
+    --pass-only \$
+    -g /home/brentp/src/slivar/gnomad.hg38.zip \$
+    -o vcfs/$cohort.bcf \$
+    --trio &amp;quot;trio_specific:mom.alts &amp;gt; 0 || dad.alts &amp;gt; 0 || kid.alts &amp;gt; 0&amp;quot; \$
+    --trio &amp;quot;DN:mom.alts == 0 &amp;amp;&amp;amp; dad.alts == 0 &amp;amp;&amp;amp; kid.alts == 1&amp;quot; \$
+    --trio &amp;quot;DN_pass_not_multiallelic:hasSample(INFO, &#39;DN&#39;, kid.id) &amp;amp;&amp;amp; variant.FILTER == &#39;PASS&#39; &amp;amp;&amp;amp; (!variant.is_multiallelic)&amp;quot; \$
+    --trio &amp;quot;DN_depth_GQ:hasSample(INFO, &#39;DN&#39;, kid.id) &amp;amp;&amp;amp; kid.DP &amp;gt; 7 &amp;amp;&amp;amp; mom.DP &amp;gt; 7 &amp;amp;&amp;amp; dad.DP &amp;gt; 7 &amp;amp;&amp;amp; mom.GQ &amp;gt; 10 &amp;amp;&amp;amp; dad.GQ &amp;gt; 10 &amp;amp;&amp;amp; kid.GQ &amp;gt; 10&amp;quot; \$
+    --trio &amp;quot;DN_AB:hasSample(INFO, &#39;DN&#39;, kid.id) &amp;amp;&amp;amp; kid.AB &amp;gt; 0.25 &amp;amp;&amp;amp; kid.AB &amp;lt; 0.75 &amp;amp;&amp;amp; ((mom.AD[1] + dad.AD[1]) &amp;lt; 2)&amp;quot; \$
+    --trio &amp;quot;DN_AB_depth:hasSample(INFO, &#39;DN_AB&#39;, kid.id) &amp;amp;&amp;amp; hasSample(INFO, &#39;DN_depth_GQ&#39;, kid.id)&amp;quot; \$
+    --trio &amp;quot;DN_gnomad:hasSample(INFO, &#39;DN&#39;, kid.id) &amp;amp;&amp;amp; !(&#39;gnomad_popmax_af_filter&#39; in INFO) &amp;amp;&amp;amp; INFO.gnomad_popmax_af &amp;lt; 0.001&amp;quot; \$
+    --trio &amp;quot;denovo:hasSample(INFO, &#39;DN_gnomad&#39;, kid.id) &amp;amp;&amp;amp; hasSample(INFO, &#39;DN_AB_depth&#39;, kid.id) &amp;amp;&amp;amp; hasSample(INFO, &#39;DN_pass_not_multiallelic&#39;, kid.id)&amp;quot; \$
+    --trio &amp;quot;lenient_denovo:hasSample(INFO, &#39;DN_pass_not_multiallelic&#39;, kid.id) &amp;amp;&amp;amp; kid.DP &amp;gt; 5 &amp;amp;&amp;amp; mom.DP &amp;gt; 5 &amp;amp;&amp;amp; dad.DP &amp;gt; 5 &amp;amp;&amp;amp; mom.GQ &amp;gt; 5 &amp;amp;&amp;amp; dad.GQ &amp;gt; 5 &amp;amp;&amp;amp; kid.GQ &amp;gt; 5 &amp;amp;&amp;amp; kid.AB &amp;gt; 0.2 &amp;amp;&amp;amp; kid.AB &amp;lt; 0.8 &amp;amp;&amp;amp; INFO.gnomad_popmax_af &amp;lt; 0.01 &amp;amp;&amp;amp; !(&#39;gnomad_popmax_af_filter&#39; in INFO)&amp;quot; \$
+    --trio &amp;quot;AR:(mom.alts == 1 || dad.alts == 1) &amp;amp;&amp;amp; kid.alts &amp;gt;= 1 &amp;amp;&amp;amp; mom.alts != -1 &amp;amp;&amp;amp; dad.alts != -1 &amp;amp;&amp;amp; mom.alts != 2 &amp;amp;&amp;amp; dad.alts != 2 &amp;amp;&amp;amp; kid.alts &amp;gt; 0&amp;quot; \$
+    --trio &amp;quot;AR_pass_not_MA:hasSample(INFO, &#39;AR&#39;, kid.id) &amp;amp;&amp;amp; variant.FILTER == &#39;PASS&#39; &amp;amp;&amp;amp; (!variant.is_multiallelic)&amp;quot; \$
+    --trio &amp;quot;AR_depth:hasSample(INFO, &#39;AR&#39;, kid.id) &amp;amp;&amp;amp; kid.DP &amp;gt; 7 &amp;amp;&amp;amp; mom.DP &amp;gt; 7 &amp;amp;&amp;amp; dad.DP &amp;gt; 7&amp;quot; \$
+    --trio &amp;quot;AR_AB:hasSample(INFO, &#39;AR&#39;, kid.id) &amp;amp;&amp;amp; ((kid.alts == 1) == (kid.AB &amp;gt; 0.25 &amp;amp;&amp;amp; kid.AB &amp;lt; 0.75))&amp;quot; \$
+    --trio &amp;quot;AR_AB_depth_GQ:hasSample(INFO, &#39;AR_AB&#39;, kid.id) &amp;amp;&amp;amp; hasSample(INFO, &#39;AR_depth&#39;, kid.id) &amp;amp;&amp;amp;  kid.GQ &amp;gt; 10 &amp;amp;&amp;amp; mom.GQ &amp;gt; 10 &amp;amp;&amp;amp; dad.GQ &amp;gt; 10&amp;quot; \$
+    --trio &amp;quot;AR_gnomad:hasSample(INFO, &#39;AR&#39;, kid.id) &amp;amp;&amp;amp; !(&#39;gnomad_popmax_af_filter&#39; in INFO) &amp;amp;&amp;amp; INFO.gnomad_popmax_af &amp;lt; 0.005&amp;quot; \$
+    --trio &amp;quot;AR_filtered:hasSample(INFO, &#39;AR_AB_depth_GQ&#39;, kid.id) &amp;amp;&amp;amp; hasSample(INFO, &#39;AR_pass_not_MA&#39;, kid.id) &amp;amp;&amp;amp; hasSample(INFO, &#39;AR_gnomad&#39;, kid.id)&amp;quot; \$
+    --trio &amp;quot;autorec:hasSample(INFO, &#39;AR_filtered&#39;, kid.id) &amp;amp;&amp;amp; kid.alts == 2 &amp;amp;&amp;amp; mom.alts == 1 &amp;amp;&amp;amp; dad.alts == 1&amp;quot; \$
+    --trio &amp;quot;XLR:mom.alts == 1 &amp;amp;&amp;amp; dad.alts == 0 &amp;amp;&amp;amp; kid.alts &amp;gt;= 1 &amp;amp;&amp;amp; variant.FILTER == &#39;PASS&#39; &amp;amp;&amp;amp; (!variant.is_multiallelic) &amp;amp;&amp;amp; (variant.CHROM == &#39;chrX&#39; || variant.CHROM == &#39;X&#39;) &amp;amp;&amp;amp; INFO.gnomad_popmax_af &amp;lt; 0.01 &amp;amp;&amp;amp; mom.DP &amp;gt; 10 &amp;amp;&amp;amp; dad.DP &amp;gt; 7 &amp;amp;&amp;amp; kid.DP &amp;gt; 7 &amp;amp;&amp;amp; kid.sex == &#39;male&#39; &amp;amp;&amp;amp; kid.GQ &amp;gt; 10 &amp;amp;&amp;amp; mom.GQ &amp;gt; 10 &amp;amp;&amp;amp; dad.GQ &amp;gt; 10 &amp;amp;&amp;amp; mom.AB &amp;gt; 0.2 &amp;amp;&amp;amp; mom.AB &amp;lt; 0.8 &amp;amp;&amp;amp; kid.AB &amp;gt; 0.3&amp;quot; \$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;note the &lt;code&gt;--trio&lt;/code&gt; lines that indicate an expression using &lt;code&gt;mom&lt;/code&gt;, &lt;code&gt;dad&lt;/code&gt;, &lt;code&gt;kid&lt;/code&gt; preceded by a label like &lt;code&gt;DN&lt;/code&gt; which were used as the plot labels above
+and which &lt;code&gt;slivar&lt;/code&gt; injects into the INFO of the output vcf whenever there is a passing expression.&lt;/p&gt;
+
+&lt;p&gt;The command to do the compound heterozygote filtering is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bcftools csq -s - --ncsq 40 -g $gff -l -f $fasta vcfs/$cohort.bcf -O u \
+  | slivar compound-hets -f BCSQ -i 2 --sample-field AR_filtered --sample-field denovo -p $ped &amp;gt; vcfs/$cohort.ch.vcf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;which uses &lt;a href=&#34;https://www.ncbi.nlm.nih.gov/pubmed/28205675&#34;&gt;bcftools csq&lt;/a&gt; to quickly annotate with gene (and
+variant functional consequence which we haven&amp;rsquo;t used in this analysis). &lt;code&gt;slivar&lt;/code&gt; then gets the &lt;code&gt;BCSQ&lt;/code&gt; field
+and extracts the gene name from the &lt;code&gt;2&lt;/code&gt;nd pipe-delimited field (-i 2) and uses that gene for aggregation.&lt;/p&gt;
+
+&lt;p&gt;Again, it&amp;rsquo;s recommended to follow the instructions &lt;a href=&#34;https://github.com/brentp/slivar/wiki/rare-disease#compound-heterozygotes&#34;&gt;here&lt;/a&gt;,
+but the code to do this full analysis on your own VCF is &lt;a href=&#34;https://gist.github.com/brentp/4ab295b6740eab3ddf802a84914ae254&#34;&gt;here&lt;/a&gt;&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
       <title>Static</title>
       <link>/post/static/</link>
       <pubDate>Thu, 28 Feb 2019 11:32:22 -0700</pubDate>

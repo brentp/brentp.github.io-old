@@ -6,10 +6,19 @@
     <description>Recent content in Posts on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 28 Feb 2019 11:32:22 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 01 May 2019 12:25:04 -0600</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>filtering variants in rare disease trios</title>
+      <link>/post/variant-filter/</link>
+      <pubDate>Wed, 01 May 2019 12:25:04 -0600</pubDate>
+      
+      <guid>/post/variant-filter/</guid>
+      <description>&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Static</title>
