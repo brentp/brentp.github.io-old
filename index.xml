@@ -128,7 +128,7 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
 &lt;li&gt;Due to &lt;a href=&#34;https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1707-2&#34;&gt;dark regions&lt;/a&gt;, variants that are common in hg38 are completely absent in GRCh37 so lifted gnomAD annotations will not filter some common variants. The shift from pink to gray in the 2nd figure shows this; the reduction (after previous filtering) is ~10-15%.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Thanks to &lt;a href=&#34;https://twitter.com/hdashnow&#34;&gt;Harriet&lt;/a&gt;, &lt;a href=&#34;https://twitter.com/aaronquinlan&#34;&gt;Aaron&lt;/a&gt;, Amelia, and &lt;a href=&#34;https://twitter.com/jxchong&#34;&gt;Jessica&lt;/a&gt; for feedback on these analyses.&lt;/p&gt;</description>
+&lt;p&gt;Thanks to &lt;a href=&#34;https://twitter.com/hdashnow&#34;&gt;Harriet&lt;/a&gt;, &lt;a href=&#34;https://twitter.com/aaronquinlan&#34;&gt;Aaron&lt;/a&gt;, Amelia, &lt;a href=&#34;https://twitter.com/PubSnips&#34;&gt;Matt&lt;/a&gt; and &lt;a href=&#34;https://twitter.com/jxchong&#34;&gt;Jessica&lt;/a&gt; for feedback on these analyses.&lt;/p&gt;</description>
       
     </item>
     
