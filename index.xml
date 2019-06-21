@@ -75,12 +75,15 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
 
 &lt;h2 id=&#34;additional-filtering-for-solo-de-novo-and-compound-het&#34;&gt;Additional Filtering for solo &lt;em&gt;de novo&lt;/em&gt; and &lt;em&gt;compound-het&lt;/em&gt;&lt;/h2&gt;
 
-&lt;p&gt;200 variants, as in the case of solo &lt;em&gt;de novo&lt;/em&gt; in the plot above seems too many to reasonably evaluate, we can reduce this number:
-+ limiting to functional variants
-+ lowering the gnomAD allele-frequency thresholds
-+ raising depth and genotype-quality thresholds
-+ filtering on TOPmed allele-frequency
-+ limiting to genes of interest&lt;/p&gt;
+&lt;p&gt;200 variants, as in the case of solo &lt;em&gt;de novo&lt;/em&gt; in the plot above seems too many to reasonably evaluate, we can reduce this number:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;limiting to functional variants&lt;/li&gt;
+&lt;li&gt;lowering the gnomAD allele-frequency thresholds&lt;/li&gt;
+&lt;li&gt;raising depth and genotype-quality thresholds&lt;/li&gt;
+&lt;li&gt;filtering on TOPmed allele-frequency&lt;/li&gt;
+&lt;li&gt;limiting to genes of interest&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;of those, the last is the most difficult as it requires either knowledge of the phenotype in each of the 149 probands or trust in a gene-wide score such as pLI or gene-damage-index. We can, however, limit to a set of genes previously associated with (any) disease using &lt;a href=&#34;http://compbio.charite.de/jenkins/job/hpo.annotations.monthly/lastSuccessfulBuild/artifact/annotation/genes_to_diseases.txt&#34;&gt;this file&lt;/a&gt; which uses OMIM disease annotations.&lt;/p&gt;
 

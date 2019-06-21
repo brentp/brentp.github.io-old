@@ -77,7 +77,7 @@
 
 <meta itemprop="datePublished" content="2019-06-21T10:11:26-06:00" />
 <meta itemprop="dateModified" content="2019-06-21T10:11:26-06:00" />
-<meta itemprop="wordCount" content="1270">
+<meta itemprop="wordCount" content="1265">
 
 
 
@@ -158,7 +158,7 @@
       <div class="post-meta">
         <span class="post-time"> 2019-06-21 </span>
         
-        <span class="more-meta"> 1270 words </span>
+        <span class="more-meta"> 1265 words </span>
         <span class="more-meta"> 6 min read </span>
       </div>
     </header>
@@ -210,12 +210,15 @@
 
 <h2 id="additional-filtering-for-solo-de-novo-and-compound-het">Additional Filtering for solo <em>de novo</em> and <em>compound-het</em></h2>
 
-<p>200 variants, as in the case of solo <em>de novo</em> in the plot above seems too many to reasonably evaluate, we can reduce this number:
-+ limiting to functional variants
-+ lowering the gnomAD allele-frequency thresholds
-+ raising depth and genotype-quality thresholds
-+ filtering on TOPmed allele-frequency
-+ limiting to genes of interest</p>
+<p>200 variants, as in the case of solo <em>de novo</em> in the plot above seems too many to reasonably evaluate, we can reduce this number:</p>
+
+<ul>
+<li>limiting to functional variants</li>
+<li>lowering the gnomAD allele-frequency thresholds</li>
+<li>raising depth and genotype-quality thresholds</li>
+<li>filtering on TOPmed allele-frequency</li>
+<li>limiting to genes of interest</li>
+</ul>
 
 <p>of those, the last is the most difficult as it requires either knowledge of the phenotype in each of the 149 probands or trust in a gene-wide score such as pLI or gene-damage-index. We can, however, limit to a set of genes previously associated with (any) disease using <a href="http://compbio.charite.de/jenkins/job/hpo.annotations.monthly/lastSuccessfulBuild/artifact/annotation/genes_to_diseases.txt">this file</a> which uses OMIM disease annotations.</p>
 
