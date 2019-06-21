@@ -35,6 +35,8 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
       
         <description>&lt;p&gt;&lt;/p&gt;
 
+&lt;p&gt;This is a continuation of my &lt;a href=&#34;https://brentp.github.io/post/variant-filter/&#34;&gt;previous post&lt;/a&gt; where I looked at filtering variants in rare disease trios.&lt;/p&gt;
+
 &lt;p&gt;In building out &lt;a href=&#34;https://github.com/brentp/slivar&#34;&gt;slivar&lt;/a&gt;, I have largely focused on trios&amp;ndash;where mom, dad, and affected kid are present. I assumed that with only a single affected sample, it would substantially reduce the &lt;em&gt;solve-rate&lt;/em&gt; and increase the false-positive rate, in which a ostensibly &lt;em&gt;causal variant&lt;/em&gt; was mis-categorized or leave so many candidate variants that the solve-rate would be lowered.&lt;/p&gt;
 
 &lt;p&gt;A recent &lt;em&gt;Cell&lt;/em&gt; paper &lt;a href=&#34;https://www.ncbi.nlm.nih.gov/pubmed/31130284&#34;&gt;looked at &amp;gt; 2200 Saudi families where a proband had rare disease&lt;/a&gt;. The apparent solve-rate was no different for singleton samples than for trios; this could be due to the choice of when trio-sequencing was needed, but, still, interesting. Also, &lt;a href=&#34;https://twitter.com/hdashnow&#34;&gt;Harriet&lt;/a&gt;, who has just joined the Quinlan lab, is co-author on &lt;a href=&#34;https://www.nature.com/articles/ejhg2017123&#34;&gt;a paper&lt;/a&gt; that, evaluates singleton exomes and finds that gene-lists created by clinicians facilitate variant prioritization.&lt;/p&gt;
