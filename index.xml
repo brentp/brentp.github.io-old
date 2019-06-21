@@ -75,7 +75,7 @@ Hugo is a static site engine written in Go.&lt;/p&gt;
 
 &lt;h2 id=&#34;additional-filtering-for-solo-de-novo-and-compound-het&#34;&gt;Additional Filtering for solo &lt;em&gt;de novo&lt;/em&gt; and &lt;em&gt;compound-het&lt;/em&gt;&lt;/h2&gt;
 
-&lt;p&gt;200 variants, as in the case of solo &lt;em&gt;de novo&lt;/em&gt; in the plot above seems too many to reasonably evaluate, we can reduce this number:&lt;/p&gt;
+&lt;p&gt;200 variants, as in the case of solo &lt;em&gt;de novo&lt;/em&gt; in the plot above seems too many to reasonably evaluate, we can reduce this number by:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;limiting to functional variants&lt;/li&gt;
