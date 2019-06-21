@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>How critical is it to have a full trio for rare-disease analysis? - genomics dev blog</title>
+  <link rel="alternate" hreflang="en" href="/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="brentp" />
+  <meta name="description" content="
+" />
+
+  <meta name="keywords" content="genomics, bioinformatics, coding" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.38-DEV" />
+
+
+<link rel="canonical" href="/post/trio-duo-solo/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="How critical is it to have a full trio for rare-disease analysis?" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/trio-duo-solo/" />
+
+
+
+<meta property="article:published_time" content="2019-06-21T10:11:26-06:00"/>
+
+<meta property="article:modified_time" content="2019-06-21T10:11:26-06:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="How critical is it to have a full trio for rare-disease analysis?">
+<meta itemprop="description" content="">
+
+
+<meta itemprop="datePublished" content="2019-06-21T10:11:26-06:00" />
+<meta itemprop="dateModified" content="2019-06-21T10:11:26-06:00" />
+<meta itemprop="wordCount" content="1252">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How critical is it to have a full trio for rare-disease analysis?"/>
+<meta name="twitter:description" content=""/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">bpbio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">bpbio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">How critical is it to have a full trio for rare-disease analysis?</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-06-21 </span>
+        
+        <span class="more-meta"> 1252 words </span>
+        <span class="more-meta"> 6 min read </span>
+      </div>
+    </header>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p></p>
+
+<p>In building out <a href="https://github.com/brentp/slivar">slivar</a>, I have largely focused on trios&ndash;where mom, dad, and affected kid are present. I assumed that with only a single affected sample, it would substantially reduce the <em>solve-rate</em> and increase the false-positive rate, in which a ostensibly <em>causal variant</em> was mis-categorized or leave so many candidate variants that the solve-rate would be lowered.</p>
+
+<p>A recent <em>Cell</em> paper <a href="https://www.ncbi.nlm.nih.gov/pubmed/31130284">looked at &gt; 2200 Saudi families where a proband had rare disease</a>. The apparent solve-rate was no different for singleton samples than for trios; this could be due to the choice of when trio-sequencing was needed, but, still, interesting. Also, <a href="https://twitter.com/hdashnow">Harriet</a>, who has just joined the Quinlan lab, is co-author on <a href="https://www.nature.com/articles/ejhg2017123">a paper</a> that, evaluates singleton exomes and finds that gene-lists created by clinicians facilitate variant prioritization.</p>
+
+<p>I ran an <em>in silico</em> experiement where a set of high-quality candidate variants is found with each of 149 trios with exome sequencing. Then each family is computationally reduced to a <em>duo</em>&ndash;with only 1 parent, and then a <em>solo</em>, with just the proband.</p>
+
+<p>Without a team of clinicians, one can&rsquo;t know the true causal variants, even with trios, but the <em>solo</em> analysis should be able to recover a superset of the variants from the <em>trio</em> analysis. As that superset becomes too large, it becomes less plausible that <em>solo</em> sequencing is a viable analysis strategy. This is imperfect, but can give a general idea of the task.</p>
+
+<p>This analysis includes <em>de novo</em>, <em>single-site, autosomal recessive</em>, <em>x-linked recessive</em>, and <em>compound heterozygote</em> inheritance patterns. <code>slivar</code> has been updated to better support <em>duo</em> and <em>solo</em> families with the latest (pending) release.</p>
+
+<p>The filtering is on only:</p>
+
+<ul>
+<li>inheritance pattern</li>
+<li>depth</li>
+<li>genotype-quality</li>
+<li>allele-balance</li>
+<li>gnomAD allele frequency</li>
+</ul>
+
+<p>For example, the filters for <em>de novo</em> variants are:</p>
+
+<ul>
+<li>trio: <code>$HQ &amp;&amp; mom.hom_ref &amp;&amp; dad.hom_ref &amp;&amp; kid.het &amp;&amp; kid.AB &gt; 0.2 &amp;&amp; kid.AB &lt; 0.8</code></li>
+<li>duo: <code>$HQ &amp;&amp; mom.hom_ref &amp;&amp; kid.het &amp;&amp; kid.AB &gt; 0.2 &amp;&amp; kid.AB &lt; 0.8</code></li>
+<li>solo: <code>$HQ &amp;&amp; kid.het &amp;&amp; kid.AB &gt; 0.2 &amp;&amp; kid.AB &lt; 0.8</code></li>
+</ul>
+
+<p>where <code>$HQ</code> ensures that each sample has <code>depth &gt;= 7</code> and <code>GQ &gt;= 10</code> and that <code>variant.FILTER == 'PASS'</code> and the variant is at a low allele-frequency (0.001 for <em>de novo</em> and 0.01 for recessive) in gnomAD. Below is the result of counting the number of variants that pass filters for each inheritance mode for 149 trios, from which we also create 149 duos (kid, mom) and solos (just kid).</p>
+
+<p><img src="/img/trio-solo-duo.png" alt="trio solo duo" /></p>
+
+<p>In the plot above, each point represents a proband with the y-position being the number of passing variants and the color indicating trio, duo, or solo, each subplot is a different inheritance mode.</p>
+
+<p>I have placed <code>denovo</code> and <code>compound-het</code> on the top row because these are the 2 modes where the number of candidates for <code>solo</code> is too high to be feasible. For other inheritance modes, the number is quite reasonable.</p>
+
+<h2 id="additional-filtering-for-solo-de-novo-and-compound-het">Additional Filtering for solo <em>de novo</em> and <em>compound-het</em></h2>
+
+<p>200 variants, as in the case of solo <em>de novo</em> in the plot above seems too many to reasonably evaluate, we can reduce this number:
++ limiting to functional variants
++ lowering the gnomAD allele-frequency thresholds
++ raising depth and genotype-quality thresholds
++ filtering on TOPmed allele-frequency
++ limiting to genes of interest</p>
+
+<p>of those, the last is the most difficult as it requires either knowledge of the phenotype in each of the 149 probands or trust in a gene-wide score such as pLI or gene-damage-index. We can, however, limit to a set of genes previously associated with (any) disease using <a href="http://compbio.charite.de/jenkins/job/hpo.annotations.monthly/lastSuccessfulBuild/artifact/annotation/genes_to_diseases.txt">this file</a> which uses OMIM disease annotations.</p>
+
+<p>In order to limit to &ldquo;functional variants&rdquo;, I used only variants with a variant-effect-predictor <a href="https://uswest.ensembl.org/info/docs/tools/vep/index.html">VEP</a> of <code>MODERATE</code> or <code>HIGH</code>. This includes missense variants, so it is still pretty permissive.</p>
+
+<h4 id="compound-heterozygotes-in-solo-samples">Compound heterozygotes in solo samples</h4>
+
+<p>The number of compound heterozygotes in a single sample could be reduced to an average of <strong>21 candidate variants (so 10-11 genes)</strong> by requiring functional variants with 1 or fewer homozygous alternates in gnomad controls and limiting both the topmed (via dbsnp) and gnomAD popmax allele frequency to &lt; 0.005. Since this number was low enough with strict, but sane filters, I did not explore further filtering for compound heterozygotes.</p>
+
+<h4 id="de-novo-in-solo-samples">De novo in solo samples</h4>
+
+<p>Since a putative <em>de novo</em> variant in a solo analysis is simply a high-quality, rare heterozygote, the findings here will also translate to autosomal dominant since that would have the same constraint. The starting point here is about 200 variants per sample, as shown by the cluster of orange points in the top-left (<em>de novo</em> subplot from the figure above. Here, I&rsquo;m not (currently)recommending a best-practices approach, just exploring the possibility of reducing this to a more reasonable number of candidate variants.</p>
+
+<p>The plot below shows the number of candidate &ldquo;<em>de novo</em>&rdquo; variants in a <em>solo</em> sample.</p>
+
+<p><img src="/img/solo.png" alt="solo" /></p>
+
+<p><strong>Except for the final column, each column along the x-axis is a more stringent subset of the one that precedes it</strong>. The left-most column, in yellow continues from the orange cluster in the <em>de novo</em> subplot of the first figure by requiring, from left-to-right:</p>
+
+<ul>
+<li><code>solo_denovo</code> (yellow): <code>HIGH</code> or <code>MODERATE</code> impact according to VEP</li>
+<li><code>solo_denovo_gnomad</code> (brown): frequency in gnomad controls &lt; 0.005 and number of hom-alts in gnomad &lt;= 1</li>
+<li><code>solo_denovo_dp_gq</code> (pink): depth &gt; 10 (was depth &gt; 6)</li>
+<li><code>solo_denovo_topmed</code>(gray): frequency in topmed &lt; 0.02 (can catch problems with lifting gnomAD to hg38)</li>
+<li><code>solo_denovo_HIGH...</code> (red): impact is HIGH according to VEP or the variant is missense and has a sift score or polyphen score that predicts it to be damaging/deleterious</li>
+<li><code>solo_denovo_HIGH</code> (blue): impact is HIGH according to VEP</li>
+<li><code>solo_denovo_disease_gene</code> (green): the variant exists in a gene associated with some disease in OMIM. this is a subset of the gray column.</li>
+</ul>
+
+<p>The final (green) column is a subset of the gray column; it shows an alternative strategy that looks at gene, rather than at the function of variants (as in red and blue).</p>
+
+<p>Intuitively, the <font color="red">red</font> and <font color="green">green</font> columns seem the most reasonable balance of stringency and likely recall. For example, we are unlikely to solve a rare-disease case if the variant is not MODERATE or HIGH impact accordign to VEP. At a mean of about 70 and 35 variants per sample, respectively, these are not ideal, but 35 is a number of variants that a clinician or analyst could reasonbly evaluate.</p>
+
+<p>Note that the drop from pink to gray indicates the effect of using TOPmed annotations that are not visible in GRCh37 but common (at more than 2% allele frequency) in hg38.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<ol>
+<li>It is possible to recover a small candidate-set by applying minimal filters to a parent-child duo. To me, this is the most useful result of this analysis which I think is also a novel observation.</li>
+<li>For a <em>solo</em> (singleton) sample, given the number of candidate variants, it is unlikely to &ldquo;solve&rdquo; a <em>de novo</em> or dominant case without prior knowledge&ndash;for example a small set of genes of interest. This will be unsurprising to most, still the analysis in the 2nd figure above does show how much the set of candidate variants can be reduced.</li>
+<li>For a <em>solo</em> sample, it <strong>does</strong> seem possible, based on the number of candidate variants to solve a recessive case&ndash;either a single-site autosomal recessive or a compound heterozygote.</li>
+<li>Due to <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1707-2">dark regions</a>, variants that are common in hg38 are completely absent in GRCh37 so lifted gnomAD annotations will not filter some common variants. The shift from pink to gray in the 2nd figure shows this; the reduction (after previous filtering) is ~10-15%.</li>
+</ol>
+
+<p>Thanks to <a href="https://twitter.com/hdashnow">Harriet</a>, <a href="https://twitter.com/aaronquinlan">Aaron</a>, Amelia, and <a href="https://twitter.com/jxchong">Jessica</a> for feedback on these analyses.</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/variant-filter/">
+            <span class="next-text nav-default">filtering variants in rare disease trios</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:bpederse@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/brent_p" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/brentp" class="iconfont icon-github" title="github"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="author">brentp</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+</body>
+</html>

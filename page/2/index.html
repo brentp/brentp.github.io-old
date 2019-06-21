@@ -57,7 +57,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-10-04T09:23:24-06:00"/>
+<meta property="og:updated_time" content="2018-10-11T13:39:21-06:00"/>
 
 
 
@@ -146,6 +146,37 @@
     
       <article class="post bg-white">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/cram-speed/">get the least out of your CRAM files</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-10-11 </span>
+      <div class="post-category">
+          
+            <a href="/categories/cram/"> cram </a>
+          
+            <a href="/categories/nim/"> nim </a>
+          
+        </div>
+      <span class="more-meta"> 393 words </span>
+      <span class="more-meta"> 2 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      This post is highlight the speed benefit of CRAM files over BAM files as it seems to not be widely used.
+CRAM files are often about 50% of the size of an identical BAM for lossless compression largely due to not saving the sequence of each read, instead keeping only the delta to the reference sequence for the alignment. Additional savings can be gained from lossy compression of base-qualities and read-names.
+    </div>
+    <div class="read-more">
+      <a href="/post/cram-speed/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/nim-mundane2/">Using Nim to count sequence-motifs in a BAM</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-10-04 </span>
@@ -222,32 +253,6 @@ Pile-up is pretty fast but it has to do a lot of work. Even to assay a single si
     </div>
     <div class="read-more">
       <a href="/post/no-pile/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/indexcov/">Indexcov: cover your bases</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-04-16 </span>
-      
-      <span class="more-meta"> 1186 words </span>
-      <span class="more-meta"> 6 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      This post is to introduce indexcov and answer common question I get about interpretation.
-I have found that, as indexcov is applied to cohorts approaching size of 100 or so, the probability that it will reveal something very interesting (either a data artefact or large chromosomal anomaly) approaches 1.0. For example, who knew that there were trisomies in Simons diversity panel?
-indexcov quickly estimates coverage for whole genome BAM and CRAM files.
-    </div>
-    <div class="read-more">
-      <a href="/post/indexcov/" class="read-more-link">Read more</a>
     </div>
     
   </div>
