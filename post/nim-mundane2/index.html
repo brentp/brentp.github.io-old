@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Using Nim to count sequence-motifs in a BAM - genomics dev blog</title>
-  <link rel="alternate" hreflang="en" href="/" />
+  <link rel="alternate" hreflang="en" href="../../" />
 
 <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -33,20 +33,20 @@ For today&amp;rsquo;s mundane task, a colleague asked me to count the occurence 
 <meta name="generator" content="Hugo 0.38-DEV" />
 
 
-<link rel="canonical" href="/post/nim-mundane2/" />
+<link rel="canonical" href="../../post/nim-mundane2/" />
 
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" href="/favicon.ico" />
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
+<link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+<link rel="icon" href="../../favicon.ico" />
+<link rel="manifest" href="../../manifest.json">
+<link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
-<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+<link href="../../dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="../../lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
 
@@ -56,7 +56,7 @@ For today&amp;rsquo;s mundane task, a colleague asked me to count the occurence 
 The first post is here.
 For today&rsquo;s mundane task, a colleague asked me to count the occurence of 2 k-mers of length 39 in each of 603 BAMs of 60X coverage. We don&rsquo;t care about partial matches or allowing mismatches so this is a pretty simple task. There are more efficient computational methods for this, but I wrote the simplest version, verified that it ran in &lt; 2 hours for a single bam and then ran it overnight on a single machine with 64 CPUs and sent the results in the morning." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/nim-mundane2/" />
+<meta property="og:url" content="../../post/nim-mundane2/" />
 
 
 
@@ -107,7 +107,7 @@ For today&rsquo;s mundane task, a colleague asked me to count the occurence of 2
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/" class="logo">bpbio</a>
+    <a href="../../" class="logo">bpbio</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -117,15 +117,15 @@ For today&rsquo;s mundane task, a colleague asked me to count the occurence of 2
 </div>
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list">
-    <a href="/">
+    <a href="../../">
         <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
+      </a><a href="../../post/">
         <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
+      </a><a href="../../tags/">
         <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
+      </a><a href="../../categories/">
         <li class="mobile-menu-item">Categories</li>
-      </a><a href="/about/">
+      </a><a href="../../about/">
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
@@ -133,21 +133,21 @@ For today&rsquo;s mundane task, a colleague asked me to count the occurence of 2
 
   <header id="header" class="header container">
     <div class="logo-wrapper">
-  <a href="/" class="logo">bpbio</a>
+  <a href="../../" class="logo">bpbio</a>
 </div>
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
     <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
+        <a class="menu-item-link" href="../../">Home</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
+        <a class="menu-item-link" href="../../post/">Archives</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
+        <a class="menu-item-link" href="../../tags/">Tags</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
+        <a class="menu-item-link" href="../../categories/">Categories</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/about/">About</a>
+        <a class="menu-item-link" href="../../about/">About</a>
       </li>
   </ul>
 </nav>
@@ -166,7 +166,7 @@ For today&rsquo;s mundane task, a colleague asked me to count the occurence of 2
         <span class="post-time"> 2018-10-04 </span>
         <div class="post-category">
             
-              <a href="/categories/nim/"> nim </a>
+              <a href="../../categories/nim/"> nim </a>
             
           </div>
         <span class="more-meta"> 403 words </span>
@@ -271,20 +271,20 @@ echo base<span style="color:#f92672">[</span>base.high<span style="color:#f92672
     <footer class="post-footer">
       <div class="post-tags">
           
-          <a href="/tags/nim-mundane/">nim-mundane</a>
+          <a href="../../tags/nim-mundane/">nim-mundane</a>
           
         </div>
 
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/cram-speed/">
+          <a class="prev" href="../../post/cram-speed/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">get the least out of your CRAM files</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         
-          <a class="next" href="/post/nim-hts-example/">
+          <a class="next" href="../../post/nim-hts-example/">
             <span class="next-text nav-default">Nim Hts Example</span>
             <span class="prev-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
@@ -302,7 +302,7 @@ echo base<span style="color:#f92672">[</span>base.high<span style="color:#f92672
       <a href="mailto:bpederse@gmail.com" class="iconfont icon-email" title="email"></a>
       <a href="https://twitter.com/brent_p" class="iconfont icon-twitter" title="twitter"></a>
       <a href="https://github.com/brentp" class="iconfont icon-github" title="github"></a>
-  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  <a href="../../index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">
@@ -330,11 +330,11 @@ echo base<span style="color:#f92672">[</span>base.high<span style="color:#f92672
     </div>
   </div>
   
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
-<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
-  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+<script src="../../lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="../../lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../../lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="../../lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="../../dist/jane.min.js?v=2.7.0"></script>
 
 
 

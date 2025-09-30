@@ -2,68 +2,68 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on genomics dev blog</title>
-    <link>/post/</link>
+    <link>../post/</link>
     <description>Recent content in Posts on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Fri, 21 Jun 2019 10:11:26 -0600</lastBuildDate>
     
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="../post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>How critical is it to have a full trio for rare-disease analysis?</title>
-      <link>/post/trio-duo-solo/</link>
+      <link>../post/trio-duo-solo/</link>
       <pubDate>Fri, 21 Jun 2019 10:11:26 -0600</pubDate>
       
-      <guid>/post/trio-duo-solo/</guid>
+      <guid>../post/trio-duo-solo/</guid>
       <description>&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>filtering variants in rare disease trios</title>
-      <link>/post/variant-filter/</link>
+      <link>../post/variant-filter/</link>
       <pubDate>Wed, 01 May 2019 12:25:04 -0600</pubDate>
       
-      <guid>/post/variant-filter/</guid>
+      <guid>../post/variant-filter/</guid>
       <description>&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Static</title>
-      <link>/post/static/</link>
+      <link>../post/static/</link>
       <pubDate>Thu, 28 Feb 2019 11:32:22 -0700</pubDate>
       
-      <guid>/post/static/</guid>
+      <guid>../post/static/</guid>
       <description>After recent twitter discussions about usable software, I thought that one thing I could do to relieve a common problem of users of my software would be to build static binaries. I know this would be helpful because I never get any questions/bugs about installs with vcfanno or indexcov for which I provide static binaries (thanks to use of #golang) even though they are (I think) widely used.
 Since most of my tools are command-line apps, that rely on htslib this can be difficult.</description>
     </item>
     
     <item>
       <title>Hts Nim Sugar</title>
-      <link>/post/hts-nim-sugar/</link>
+      <link>../post/hts-nim-sugar/</link>
       <pubDate>Fri, 25 Jan 2019 10:15:01 -0700</pubDate>
       
-      <guid>/post/hts-nim-sugar/</guid>
+      <guid>../post/hts-nim-sugar/</guid>
       <description>hts-nim is a library that allows one to use htslib via the nim programming language. Nim is a garbage-collected language that compiles to C and often has similar performance. I have become very productive in nim and especially in hts-nim and there are by now, at least a few other users of hts-nim. This post is to show how one particular feature of nim enables users to write their own functions that will be used no differently than hts-nim&amp;rsquo;s provided functionality.</description>
     </item>
     
     <item>
       <title>get the least out of your CRAM files</title>
-      <link>/post/cram-speed/</link>
+      <link>../post/cram-speed/</link>
       <pubDate>Thu, 11 Oct 2018 13:39:21 -0600</pubDate>
       
-      <guid>/post/cram-speed/</guid>
+      <guid>../post/cram-speed/</guid>
       <description>This post is highlight the speed benefit of CRAM files over BAM files as it seems to not be widely used.
 CRAM files are often about 50% of the size of an identical BAM for lossless compression largely due to not saving the sequence of each read, instead keeping only the delta to the reference sequence for the alignment. Additional savings can be gained from lossy compression of base-qualities and read-names.</description>
     </item>
     
     <item>
       <title>Using Nim to count sequence-motifs in a BAM</title>
-      <link>/post/nim-mundane2/</link>
+      <link>../post/nim-mundane2/</link>
       <pubDate>Thu, 04 Oct 2018 09:23:24 -0600</pubDate>
       
-      <guid>/post/nim-mundane2/</guid>
+      <guid>../post/nim-mundane2/</guid>
       <description>This is the 2nd post describing mundane uses of nim in day-to-day genomics.
 The first post is here.
 For today&amp;rsquo;s mundane task, a colleague asked me to count the occurence of 2 k-mers of length 39 in each of 603 BAMs of 60X coverage. We don&amp;rsquo;t care about partial matches or allowing mismatches so this is a pretty simple task. There are more efficient computational methods for this, but I wrote the simplest version, verified that it ran in &amp;lt; 2 hours for a single bam and then ran it overnight on a single machine with 64 CPUs and sent the results in the morning.</description>
@@ -71,30 +71,30 @@ For today&amp;rsquo;s mundane task, a colleague asked me to count the occurence 
     
     <item>
       <title>Nim Hts Example</title>
-      <link>/post/nim-hts-example/</link>
+      <link>../post/nim-hts-example/</link>
       <pubDate>Mon, 01 Oct 2018 13:17:00 -0600</pubDate>
       
-      <guid>/post/nim-hts-example/</guid>
+      <guid>../post/nim-hts-example/</guid>
       <description>Several folks have recently expressed interest in learning nim which I have found to be very useful for genomics because it has a simple syntax like python, but it compiles to be as fast as C. In the case of mosdepth which is written in nim, it is faster than the competing C implementations because of choice of algorithm.
 I have started using nim in my day-to-day scripting to replace python, in part, so this will be the first in a series of posts that show some relatively mundane code that I write like a script but will compile to run very fast.</description>
     </item>
     
     <item>
       <title>You don&#39;t need to pileup</title>
-      <link>/post/no-pile/</link>
+      <link>../post/no-pile/</link>
       <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/no-pile/</guid>
+      <guid>../post/no-pile/</guid>
       <description>I stumbled on this (now) obvious way of doing things that I hadn&amp;rsquo;t seen used much/at all; In a project soon to be released, we needed to quickly assay thousands of sites from BAM/CRAM files and do a sort of cheap genotyping&amp;ndash;or allele counting. Given this task, a common tool to reach for is the pile-up.
 Pile-up is pretty fast but it has to do a lot of work. Even to assay a single site, a pileup will first get each read and a pileup structure (bam_pileup1_t in htslib) for each read into memory.</description>
     </item>
     
     <item>
       <title>Indexcov: cover your bases</title>
-      <link>/post/indexcov/</link>
+      <link>../post/indexcov/</link>
       <pubDate>Mon, 16 Apr 2018 13:10:07 -0600</pubDate>
       
-      <guid>/post/indexcov/</guid>
+      <guid>../post/indexcov/</guid>
       <description>This post is to introduce indexcov and answer common question I get about interpretation.
 I have found that, as indexcov is applied to cohorts approaching size of 100 or so, the probability that it will reveal something very interesting (either a data artefact or large chromosomal anomaly) approaches 1.0. For example, who knew that there were trisomies in Simons diversity panel?
 indexcov quickly estimates coverage for whole genome BAM and CRAM files.</description>
@@ -102,30 +102,30 @@ indexcov quickly estimates coverage for whole genome BAM and CRAM files.</descri
     
     <item>
       <title>mosdepth ideas</title>
-      <link>/post/arrays/</link>
+      <link>../post/arrays/</link>
       <pubDate>Wed, 28 Mar 2018 20:12:07 -0600</pubDate>
       
-      <guid>/post/arrays/</guid>
+      <guid>../post/arrays/</guid>
       <description>I&amp;rsquo;m working on a new project and part of it is made possible by an observation that we stumbled on with mosdepth. It&amp;rsquo;s something that&amp;rsquo;s obvious in retrospect but wasn&amp;rsquo;t fully apparent to me until after mosdepth was mostly written. In short, that observation is computers can do stuff with arrays quickly.
 The longer story behind that obvious and simple observation is as follows. mosdepth is a tool to calculate depth from BAM/CRAM files.</description>
     </item>
     
     <item>
       <title>Smoove</title>
-      <link>/post/smoove/</link>
+      <link>../post/smoove/</link>
       <pubDate>Tue, 20 Mar 2018 16:49:22 -0600</pubDate>
       
-      <guid>/post/smoove/</guid>
+      <guid>../post/smoove/</guid>
       <description>smoove wraps existing software and adds some internal read-filtering to simplify calling and genotyping structural variants. It parallelizes each step as it can, for example, it streams lumpy output directly to multiple svtyper processes for genotyping. It contains several sub-commands but users with cohorts of less than about 40 samples can get a joint-called, genotyped VCF in a single command:
 smoove call -x --genotype --name $name --outdir . \ -f $fasta --processes 12 --exclude $bed *.</description>
     </item>
     
     <item>
       <title>Noise</title>
-      <link>/post/noise/</link>
+      <link>../post/noise/</link>
       <pubDate>Wed, 14 Mar 2018 19:35:37 -0600</pubDate>
       
-      <guid>/post/noise/</guid>
+      <guid>../post/noise/</guid>
       <description>This afternoon, I did a quick analysis to attempt to find variants on the X chromosome that are under recessive constraint&amp;ndash;that is that they appear in some non-zero frequency in females but never occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but could be seen in females thanks to a backup copy. I thought that these might be occurring at a relatively high allele frequency (greater than 0.</description>
     </item>
     

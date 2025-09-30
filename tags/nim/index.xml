@@ -2,40 +2,40 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nim on genomics dev blog</title>
-    <link>/tags/nim/</link>
+    <link>../../tags/nim/</link>
     <description>Recent content in Nim on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Fri, 25 Jan 2019 10:15:01 -0700</lastBuildDate>
     
-	<atom:link href="/tags/nim/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="../../tags/nim/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hts Nim Sugar</title>
-      <link>/post/hts-nim-sugar/</link>
+      <link>../../post/hts-nim-sugar/</link>
       <pubDate>Fri, 25 Jan 2019 10:15:01 -0700</pubDate>
       
-      <guid>/post/hts-nim-sugar/</guid>
+      <guid>../../post/hts-nim-sugar/</guid>
       <description>hts-nim is a library that allows one to use htslib via the nim programming language. Nim is a garbage-collected language that compiles to C and often has similar performance. I have become very productive in nim and especially in hts-nim and there are by now, at least a few other users of hts-nim. This post is to show how one particular feature of nim enables users to write their own functions that will be used no differently than hts-nim&amp;rsquo;s provided functionality.</description>
     </item>
     
     <item>
       <title>get the least out of your CRAM files</title>
-      <link>/post/cram-speed/</link>
+      <link>../../post/cram-speed/</link>
       <pubDate>Thu, 11 Oct 2018 13:39:21 -0600</pubDate>
       
-      <guid>/post/cram-speed/</guid>
+      <guid>../../post/cram-speed/</guid>
       <description>This post is highlight the speed benefit of CRAM files over BAM files as it seems to not be widely used.
 CRAM files are often about 50% of the size of an identical BAM for lossless compression largely due to not saving the sequence of each read, instead keeping only the delta to the reference sequence for the alignment. Additional savings can be gained from lossy compression of base-qualities and read-names.</description>
     </item>
     
     <item>
       <title>You don&#39;t need to pileup</title>
-      <link>/post/no-pile/</link>
+      <link>../../post/no-pile/</link>
       <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/no-pile/</guid>
+      <guid>../../post/no-pile/</guid>
       <description>I stumbled on this (now) obvious way of doing things that I hadn&amp;rsquo;t seen used much/at all; In a project soon to be released, we needed to quickly assay thousands of sites from BAM/CRAM files and do a sort of cheap genotyping&amp;ndash;or allele counting. Given this task, a common tool to reach for is the pile-up.
 Pile-up is pretty fast but it has to do a lot of work. Even to assay a single site, a pileup will first get each read and a pileup structure (bam_pileup1_t in htslib) for each read into memory.</description>
     </item>

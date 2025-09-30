@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Noise on genomics dev blog</title>
-    <link>/tags/noise/</link>
+    <link>../../tags/noise/</link>
     <description>Recent content in Noise on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 14 Mar 2018 19:35:37 -0600</lastBuildDate>
     
-	<atom:link href="/tags/noise/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="../../tags/noise/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Noise</title>
-      <link>/post/noise/</link>
+      <link>../../post/noise/</link>
       <pubDate>Wed, 14 Mar 2018 19:35:37 -0600</pubDate>
       
-      <guid>/post/noise/</guid>
+      <guid>../../post/noise/</guid>
       <description>This afternoon, I did a quick analysis to attempt to find variants on the X chromosome that are under recessive constraint&amp;ndash;that is that they appear in some non-zero frequency in females but never occur in male. That is, without an extra copy, a variant might be embryonic lethal in males, but could be seen in females thanks to a backup copy. I thought that these might be occurring at a relatively high allele frequency (greater than 0.</description>
     </item>
     

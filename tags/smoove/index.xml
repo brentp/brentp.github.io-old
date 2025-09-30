@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Smoove on genomics dev blog</title>
-    <link>/tags/smoove/</link>
+    <link>../../tags/smoove/</link>
     <description>Recent content in Smoove on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Tue, 20 Mar 2018 16:49:22 -0600</lastBuildDate>
     
-	<atom:link href="/tags/smoove/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="../../tags/smoove/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Smoove</title>
-      <link>/post/smoove/</link>
+      <link>../../post/smoove/</link>
       <pubDate>Tue, 20 Mar 2018 16:49:22 -0600</pubDate>
       
-      <guid>/post/smoove/</guid>
+      <guid>../../post/smoove/</guid>
       <description>smoove wraps existing software and adds some internal read-filtering to simplify calling and genotyping structural variants. It parallelizes each step as it can, for example, it streams lumpy output directly to multiple svtyper processes for genotyping. It contains several sub-commands but users with cohorts of less than about 40 samples can get a joint-called, genotyped VCF in a single command:
 smoove call -x --genotype --name $name --outdir . \ -f $fasta --processes 12 --exclude $bed *.</description>
     </item>

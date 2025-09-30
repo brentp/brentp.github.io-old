@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Indexcov: cover your bases - genomics dev blog</title>
-  <link rel="alternate" hreflang="en" href="/" />
+  <link rel="alternate" hreflang="en" href="../../" />
 
 <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -33,20 +33,20 @@ indexcov quickly estimates coverage for whole genome BAM and CRAM files." />
 <meta name="generator" content="Hugo 0.38-DEV" />
 
 
-<link rel="canonical" href="/post/indexcov/" />
+<link rel="canonical" href="../../post/indexcov/" />
 
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" href="/favicon.ico" />
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
+<link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+<link rel="icon" href="../../favicon.ico" />
+<link rel="manifest" href="../../manifest.json">
+<link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
-<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+<link href="../../dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="../../lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
 
@@ -56,7 +56,7 @@ indexcov quickly estimates coverage for whole genome BAM and CRAM files." />
 I have found that, as indexcov is applied to cohorts approaching size of 100 or so, the probability that it will reveal something very interesting (either a data artefact or large chromosomal anomaly) approaches 1.0. For example, who knew that there were trisomies in Simons diversity panel?
 indexcov quickly estimates coverage for whole genome BAM and CRAM files." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/indexcov/" />
+<meta property="og:url" content="../../post/indexcov/" />
 
 
 
@@ -107,7 +107,7 @@ indexcov quickly estimates coverage for whole genome BAM and CRAM files."/>
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/" class="logo">bpbio</a>
+    <a href="../../" class="logo">bpbio</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -117,15 +117,15 @@ indexcov quickly estimates coverage for whole genome BAM and CRAM files."/>
 </div>
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list">
-    <a href="/">
+    <a href="../../">
         <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
+      </a><a href="../../post/">
         <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
+      </a><a href="../../tags/">
         <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
+      </a><a href="../../categories/">
         <li class="mobile-menu-item">Categories</li>
-      </a><a href="/about/">
+      </a><a href="../../about/">
         <li class="mobile-menu-item">About</li>
       </a>
   </ul>
@@ -133,21 +133,21 @@ indexcov quickly estimates coverage for whole genome BAM and CRAM files."/>
 
   <header id="header" class="header container">
     <div class="logo-wrapper">
-  <a href="/" class="logo">bpbio</a>
+  <a href="../../" class="logo">bpbio</a>
 </div>
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
     <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
+        <a class="menu-item-link" href="../../">Home</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
+        <a class="menu-item-link" href="../../post/">Archives</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
+        <a class="menu-item-link" href="../../tags/">Tags</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
+        <a class="menu-item-link" href="../../categories/">Categories</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/about/">About</a>
+        <a class="menu-item-link" href="../../about/">About</a>
       </li>
   </ul>
 </nav>
@@ -210,7 +210,7 @@ are static images that can be clicked to go to an interactive plot.</p>
 <p>To orient, here is X chromosome, where we expect males to have a coverage
 of about 0.5 and females about 1 (since everything is scaled to 1 for diploid copy).</p>
 
-<p><img src="/img/x-ex.png" alt="example X coverage" /></p>
+<p><img src="../../img/x-ex.png" alt="example X coverage" /></p>
 
 <p>The x-axis is position along the chromosome, and the y-axis is scaled coverage. This cohort has 50
 so samples all shown in the same plot, each sample with it&rsquo;s own color. Note we can clearly see
@@ -223,21 +223,21 @@ user to an interactive version that allows hovering to see per-sample info.</p>
 <p><code>indexcov</code> makes a similar plot for the Y chromosome where, again, males and females separate
 cleanly. It then uses the data from the sex chromosomes to make a plot like this:</p>
 
-<p><img src="/img/sex-plot.png" alt="sex plot" /></p>
+<p><img src="../../img/sex-plot.png" alt="sex plot" /></p>
 
 <p>Note that, among other uses, this type of plot helps to find XXY samples which are not detectable when looking
 at X and Y in isolation.</p>
 
 <p>In a recent project, we saw this:</p>
 
-<p><img src="/img/funky.png" alt="funky plot" /></p>
+<p><img src="../../img/funky.png" alt="funky plot" /></p>
 
 <p>where there&rsquo;s a sample with 3 copies of X and another sample where most cells appear to have lost the Y.</p>
 
 <p>It&rsquo;s also possible to see large (&gt;10MB deletions). For example, here&rsquo;s a <strong>deletion at the end of chr10</strong> found
 in a cohort of 1200 samples:</p>
 
-<p><img src="/img/indexcov-del.png" alt="deletion plot" /></p>
+<p><img src="../../img/indexcov-del.png" alt="deletion plot" /></p>
 
 <p>It takes a couple of seconds of concentration to see it, but this is 1200 samples, so we can scan
 an entire genome for large events in a couple of minutes. These are the types of events that would
@@ -247,12 +247,12 @@ more expensive LOH or coverage analyses. Even depth-based CNV callers have troub
 <p>Here&rsquo;s another example of the <a href="https://ghr.nlm.nih.gov/condition/angelman-syndrome">Angelman</a> <strong>deletion at the start of (acrocentric) chromosome 15</strong> in a cohort
 of 45 samples:</p>
 
-<p><img src="/img/indexcov-angelman.png" alt="angelman coverage" /></p>
+<p><img src="../../img/indexcov-angelman.png" alt="angelman coverage" /></p>
 
 <p>Another way to plot this is a cumulative coverage plot. The same plot above can be seen somewhat more concisely
 as</p>
 
-<p><img src="/img/indexcov-angelman-cum.png" alt="angelman cumulate" /></p>
+<p><img src="../../img/indexcov-angelman-cum.png" alt="angelman cumulate" /></p>
 
 <p>Since much of the chromosome is not covered due to the acrocentric chromosomal region, the y-axis starts at about 0.8
 for all samples. For most samples, it does not drop until about 1. This means that most samples are covered at about
@@ -270,7 +270,7 @@ sample is outside of the range of 0.85 to 1.15. It also calculates the slope of 
 seems to work quite well. It also calculates the proportion of bins with coverage &lt; 0.15. This is useful for finding samples
 with a lot of missing data. It then makes a plot of those 2 values. For the 45 sample cohort above, that looks like this:</p>
 
-<p><img src="/img/indexcov-bin.png" alt="bin plot" /></p>
+<p><img src="../../img/indexcov-bin.png" alt="bin plot" /></p>
 
 <p>Note that there are 2 samples that are very high on the y-axis. Those correspond to the tan and pink and light-tan colored samples
 that have variable coverage in the depth plots (in the HTML, this plot is hoverable so those samples are easily discoverable).</p>
@@ -284,7 +284,7 @@ prolems.</p>
 variation in coverage still remains. This is especially apparent on chromosomes with high-GC content. For example, here is
 chromosome 19, a high-GC chromosome, for the same 45-member cohort:</p>
 
-<p><img src="/img/indexcov-19.png" alt="chr 19" /></p>
+<p><img src="../../img/indexcov-19.png" alt="chr 19" /></p>
 
 <p>Note that there is extreme coverage variability in all samples, but especially in the tan sample. Don&rsquo;t mistake
 variability like this for an event, if you see a sample like that check if it&rsquo;s high on the bin plot.</p>
@@ -327,20 +327,20 @@ users can do their own analyses <a href="https://twitter.com/yokofakun/status/97
     <footer class="post-footer">
       <div class="post-tags">
           
-          <a href="/tags/coverage/">coverage</a>
+          <a href="../../tags/coverage/">coverage</a>
           
         </div>
 
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/no-pile/">
+          <a class="prev" href="../../post/no-pile/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">You don&#39;t need to pileup</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         
-          <a class="next" href="/post/arrays/">
+          <a class="next" href="../../post/arrays/">
             <span class="next-text nav-default">mosdepth ideas</span>
             <span class="prev-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
@@ -380,7 +380,7 @@ users can do their own analyses <a href="https://twitter.com/yokofakun/status/97
       <a href="mailto:bpederse@gmail.com" class="iconfont icon-email" title="email"></a>
       <a href="https://twitter.com/brent_p" class="iconfont icon-twitter" title="twitter"></a>
       <a href="https://github.com/brentp" class="iconfont icon-github" title="github"></a>
-  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  <a href="../../index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">
@@ -408,11 +408,11 @@ users can do their own analyses <a href="https://twitter.com/yokofakun/status/97
     </div>
   </div>
   
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
-<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
-  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
-<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+<script src="../../lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="../../lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../../lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="../../lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="../../dist/jane.min.js?v=2.7.0"></script>
 
 
 

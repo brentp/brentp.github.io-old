@@ -2,111 +2,111 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on genomics dev blog</title>
-    <link>/tags/</link>
+    <link>../tags/</link>
     <description>Recent content in Tags on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Mon, 16 Apr 2018 13:10:07 -0600</lastBuildDate>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="../tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Coverage</title>
-      <link>/tags/coverage/</link>
+      <link>../tags/coverage/</link>
       <pubDate>Mon, 16 Apr 2018 13:10:07 -0600</pubDate>
       
-      <guid>/tags/coverage/</guid>
+      <guid>../tags/coverage/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Cram</title>
-      <link>/tags/cram/</link>
+      <link>../tags/cram/</link>
       <pubDate>Thu, 11 Oct 2018 13:39:21 -0600</pubDate>
       
-      <guid>/tags/cram/</guid>
+      <guid>../tags/cram/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Genomics</title>
-      <link>/tags/genomics/</link>
+      <link>../tags/genomics/</link>
       <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/genomics/</guid>
+      <guid>../tags/genomics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Hts</title>
-      <link>/tags/hts/</link>
+      <link>../tags/hts/</link>
       <pubDate>Fri, 25 Jan 2019 10:15:01 -0700</pubDate>
       
-      <guid>/tags/hts/</guid>
+      <guid>../tags/hts/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Nim</title>
-      <link>/tags/nim/</link>
+      <link>../tags/nim/</link>
       <pubDate>Fri, 25 Jan 2019 10:15:01 -0700</pubDate>
       
-      <guid>/tags/nim/</guid>
+      <guid>../tags/nim/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Nim Mundane</title>
-      <link>/tags/nim-mundane/</link>
+      <link>../tags/nim-mundane/</link>
       <pubDate>Thu, 04 Oct 2018 09:23:24 -0600</pubDate>
       
-      <guid>/tags/nim-mundane/</guid>
+      <guid>../tags/nim-mundane/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Noise</title>
-      <link>/tags/noise/</link>
+      <link>../tags/noise/</link>
       <pubDate>Wed, 14 Mar 2018 19:35:37 -0600</pubDate>
       
-      <guid>/tags/noise/</guid>
+      <guid>../tags/noise/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Python</title>
-      <link>/tags/python/</link>
+      <link>../tags/python/</link>
       <pubDate>Wed, 14 Mar 2018 19:35:37 -0600</pubDate>
       
-      <guid>/tags/python/</guid>
+      <guid>../tags/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Smoove</title>
-      <link>/tags/smoove/</link>
+      <link>../tags/smoove/</link>
       <pubDate>Tue, 20 Mar 2018 16:49:22 -0600</pubDate>
       
-      <guid>/tags/smoove/</guid>
+      <guid>../tags/smoove/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Sv</title>
-      <link>/tags/sv/</link>
+      <link>../tags/sv/</link>
       <pubDate>Tue, 20 Mar 2018 16:49:22 -0600</pubDate>
       
-      <guid>/tags/sv/</guid>
+      <guid>../tags/sv/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Variant</title>
-      <link>/tags/variant/</link>
+      <link>../tags/variant/</link>
       <pubDate>Wed, 14 Mar 2018 19:35:37 -0600</pubDate>
       
-      <guid>/tags/variant/</guid>
+      <guid>../tags/variant/</guid>
       <description></description>
     </item>
     

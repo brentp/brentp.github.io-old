@@ -2,47 +2,47 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on genomics dev blog</title>
-    <link>/categories/</link>
+    <link>../categories/</link>
     <description>Recent content in Categories on genomics dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="../categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Coverage</title>
-      <link>/categories/coverage/</link>
+      <link>../categories/coverage/</link>
       <pubDate>Wed, 28 Mar 2018 20:12:07 -0600</pubDate>
       
-      <guid>/categories/coverage/</guid>
+      <guid>../categories/coverage/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Cram</title>
-      <link>/categories/cram/</link>
+      <link>../categories/cram/</link>
       <pubDate>Thu, 11 Oct 2018 13:39:21 -0600</pubDate>
       
-      <guid>/categories/cram/</guid>
+      <guid>../categories/cram/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Genomics</title>
-      <link>/categories/genomics/</link>
+      <link>../categories/genomics/</link>
       <pubDate>Wed, 14 Mar 2018 19:35:37 -0600</pubDate>
       
-      <guid>/categories/genomics/</guid>
+      <guid>../categories/genomics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Nim</title>
-      <link>/categories/nim/</link>
+      <link>../categories/nim/</link>
       <pubDate>Fri, 25 Jan 2019 10:15:01 -0700</pubDate>
       
-      <guid>/categories/nim/</guid>
+      <guid>../categories/nim/</guid>
       <description></description>
     </item>
     
